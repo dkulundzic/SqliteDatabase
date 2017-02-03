@@ -10,6 +10,9 @@
 		2F48F1EE1E44B44F00702A4F /* SqliteDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F48F1E41E44B44F00702A4F /* SqliteDatabase.framework */; };
 		2F48F1F31E44B44F00702A4F /* SqliteDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F1F21E44B44F00702A4F /* SqliteDatabaseTests.swift */; };
 		2F48F1F51E44B44F00702A4F /* SqliteDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F48F1E71E44B44F00702A4F /* SqliteDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */; };
+		2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */; };
+		2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +32,9 @@
 		2F48F1ED1E44B44F00702A4F /* SqliteDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqliteDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F48F1F21E44B44F00702A4F /* SqliteDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseTests.swift; sourceTree = "<group>"; };
 		2F48F1F41E44B44F00702A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInfo.swift; sourceTree = "<group>"; };
+		2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseService.swift; sourceTree = "<group>"; };
+		2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInfoTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				2F48F1F21E44B44F00702A4F /* SqliteDatabaseTests.swift */,
+				2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */,
 				2F48F1F41E44B44F00702A4F /* Info.plist */,
 			);
 			path = SqliteDatabaseTests;
@@ -90,6 +97,8 @@
 		2F48F1FE1E44B46300702A4F /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */,
+				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -205,6 +214,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
+				2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */,
 				2F48F1F31E44B44F00702A4F /* SqliteDatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +380,7 @@
 		2F48F1FC1E44B44F00702A4F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SqliteDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Farmeron.SqliteDatabaseTests;
@@ -379,6 +392,7 @@
 		2F48F1FD1E44B44F00702A4F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SqliteDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Farmeron.SqliteDatabaseTests;
