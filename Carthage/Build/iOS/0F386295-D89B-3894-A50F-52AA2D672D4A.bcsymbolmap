@@ -1,0 +1,295 @@
+BCSymbolMap Version: 2.0
++[FMDatabase databaseWithPath:]
+-[FMDatabase init]
+-[FMDatabase initWithPath:]
+-[FMDatabase finalize]
+-[FMDatabase dealloc]
+-[FMDatabase databasePath]
++[FMDatabase FMDBUserVersion]
++[FMDatabase FMDBVersion]
+___25+[FMDatabase FMDBVersion]_block_invoke
+___copy_helper_block_
+___destroy_helper_block_
++[FMDatabase sqliteLibVersion]
++[FMDatabase isSQLiteThreadSafe]
+-[FMDatabase sqliteHandle]
+-[FMDatabase sqlitePath]
+-[FMDatabase open]
+-[FMDatabase openWithFlags:]
+-[FMDatabase openWithFlags:vfs:]
+-[FMDatabase close]
+-[FMDatabase setMaxBusyRetryTimeInterval:]
+_FMDBDatabaseBusyHandler
+-[FMDatabase maxBusyRetryTimeInterval]
+-[FMDatabase busyRetryTimeout]
+-[FMDatabase setBusyRetryTimeout:]
+-[FMDatabase hasOpenResultSets]
+-[FMDatabase closeOpenResultSets]
+-[FMDatabase resultSetDidClose:]
+-[FMDatabase clearCachedStatements]
+-[FMDatabase cachedStatementForQuery:]
+___38-[FMDatabase cachedStatementForQuery:]_block_invoke
+-[FMDatabase setCachedStatement:forQuery:]
+-[FMDatabase rekey:]
+-[FMDatabase rekeyWithData:]
+-[FMDatabase setKey:]
+-[FMDatabase setKeyWithData:]
++[FMDatabase storeableDateFormat:]
+-[FMDatabase hasDateFormatter]
+-[FMDatabase setDateFormat:]
+-[FMDatabase dateFromString:]
+-[FMDatabase stringFromDate:]
+-[FMDatabase goodConnection]
+-[FMDatabase warnInUse]
+-[FMDatabase databaseExists]
+-[FMDatabase lastErrorMessage]
+-[FMDatabase hadError]
+-[FMDatabase lastErrorCode]
+-[FMDatabase errorWithMessage:]
+-[FMDatabase lastError]
+-[FMDatabase lastInsertRowId]
+-[FMDatabase changes]
+-[FMDatabase bindObject:toColumn:inStatement:]
+-[FMDatabase extractSQL:argumentsList:intoString:arguments:]
+-[FMDatabase executeQuery:withParameterDictionary:]
+-[FMDatabase executeQuery:withArgumentsInArray:orDictionary:orVAList:]
+-[FMDatabase executeQuery:]
+-[FMDatabase executeQueryWithFormat:]
+-[FMDatabase executeQuery:withArgumentsInArray:]
+-[FMDatabase executeQuery:values:error:]
+-[FMDatabase executeQuery:withVAList:]
+-[FMDatabase executeUpdate:error:withArgumentsInArray:orDictionary:orVAList:]
+-[FMDatabase executeUpdate:]
+-[FMDatabase executeUpdate:withArgumentsInArray:]
+-[FMDatabase executeUpdate:values:error:]
+-[FMDatabase executeUpdate:withParameterDictionary:]
+-[FMDatabase executeUpdate:withVAList:]
+-[FMDatabase executeUpdateWithFormat:]
+-[FMDatabase executeStatements:]
+-[FMDatabase executeStatements:withResultBlock:]
+-[FMDatabase executeUpdate:withErrorAndBindings:]
+-[FMDatabase update:withErrorAndBindings:]
+-[FMDatabase rollback]
+-[FMDatabase commit]
+-[FMDatabase beginDeferredTransaction]
+-[FMDatabase beginTransaction]
+-[FMDatabase inTransaction]
+-[FMDatabase startSavePointWithName:error:]
+-[FMDatabase releaseSavePointWithName:error:]
+-[FMDatabase rollbackToSavePointWithName:error:]
+-[FMDatabase inSavePoint:]
+-[FMDatabase shouldCacheStatements]
+-[FMDatabase setShouldCacheStatements:]
+-[FMDatabase makeFunctionNamed:maximumArguments:withBlock:]
+-[FMDatabase cachedStatements]
+-[FMDatabase setCachedStatements:]
+-[FMDatabase logsErrors]
+-[FMDatabase setLogsErrors:]
+-[FMDatabase crashOnErrors]
+-[FMDatabase setCrashOnErrors:]
+-[FMDatabase checkedOut]
+-[FMDatabase setCheckedOut:]
+-[FMDatabase traceExecution]
+-[FMDatabase setTraceExecution:]
+-[FMDatabase .cxx_destruct]
+-[FMStatement finalize]
+-[FMStatement dealloc]
+-[FMStatement close]
+-[FMStatement reset]
+-[FMStatement description]
+-[FMStatement statement]
+-[FMStatement setStatement:]
+-[FMStatement query]
+-[FMStatement setQuery:]
+-[FMStatement useCount]
+-[FMStatement setUseCount:]
+-[FMStatement inUse]
+-[FMStatement setInUse:]
+-[FMStatement .cxx_destruct]
+_FMDBVersion.once
+_FMDBVersion.FMDBVersionVal
+___block_descriptor_tmp
+___block_descriptor_tmp.89
+___block_literal_global
+_inSavePoint:.savePointIdx
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabase.m
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabase.h
+FMDBBlockSQLiteCallBackFunction
+FMDBEscapeSavePointName
+FMDBExecuteBulkSQLCallback
+__38-[FMDatabase cachedStatementForQuery:]_block_invoke
+FMDBDatabaseBusyHandler
+__destroy_helper_block_
+__copy_helper_block_
+__25+[FMDatabase FMDBVersion]_block_invoke
+_dispatch_once
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/include/dispatch/once.h
++[FMResultSet resultSetWithStatement:usingParentDatabase:]
+-[FMResultSet finalize]
+-[FMResultSet dealloc]
+-[FMResultSet close]
+-[FMResultSet columnCount]
+-[FMResultSet columnNameToIndexMap]
+-[FMResultSet kvcMagic:]
+-[FMResultSet resultDict]
+-[FMResultSet resultDictionary]
+-[FMResultSet next]
+-[FMResultSet nextWithError:]
+-[FMResultSet hasAnotherRow]
+-[FMResultSet columnIndexForName:]
+-[FMResultSet intForColumn:]
+-[FMResultSet intForColumnIndex:]
+-[FMResultSet longForColumn:]
+-[FMResultSet longForColumnIndex:]
+-[FMResultSet longLongIntForColumn:]
+-[FMResultSet longLongIntForColumnIndex:]
+-[FMResultSet unsignedLongLongIntForColumn:]
+-[FMResultSet unsignedLongLongIntForColumnIndex:]
+-[FMResultSet boolForColumn:]
+-[FMResultSet boolForColumnIndex:]
+-[FMResultSet doubleForColumn:]
+-[FMResultSet doubleForColumnIndex:]
+-[FMResultSet stringForColumnIndex:]
+-[FMResultSet stringForColumn:]
+-[FMResultSet dateForColumn:]
+-[FMResultSet dateForColumnIndex:]
+-[FMResultSet dataForColumn:]
+-[FMResultSet dataForColumnIndex:]
+-[FMResultSet dataNoCopyForColumn:]
+-[FMResultSet dataNoCopyForColumnIndex:]
+-[FMResultSet columnIndexIsNull:]
+-[FMResultSet columnIsNull:]
+-[FMResultSet UTF8StringForColumnIndex:]
+-[FMResultSet UTF8StringForColumnName:]
+-[FMResultSet objectForColumnIndex:]
+-[FMResultSet objectForColumnName:]
+-[FMResultSet columnNameForIndex:]
+-[FMResultSet setParentDB:]
+-[FMResultSet objectAtIndexedSubscript:]
+-[FMResultSet objectForKeyedSubscript:]
+-[FMResultSet query]
+-[FMResultSet setQuery:]
+-[FMResultSet statement]
+-[FMResultSet setStatement:]
+-[FMResultSet .cxx_destruct]
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMResultSet.m
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMResultSet.h
++[FMDatabaseQueue databaseQueueWithPath:]
++[FMDatabaseQueue databaseQueueWithPath:flags:]
++[FMDatabaseQueue databaseClass]
+-[FMDatabaseQueue initWithPath:flags:vfs:]
+-[FMDatabaseQueue initWithPath:flags:]
+-[FMDatabaseQueue initWithPath:]
+-[FMDatabaseQueue init]
+-[FMDatabaseQueue dealloc]
+-[FMDatabaseQueue close]
+___24-[FMDatabaseQueue close]_block_invoke
+-[FMDatabaseQueue database]
+-[FMDatabaseQueue inDatabase:]
+___30-[FMDatabaseQueue inDatabase:]_block_invoke
+___copy_helper_block_.42
+___destroy_helper_block_.43
+-[FMDatabaseQueue beginTransaction:withBlock:]
+___46-[FMDatabaseQueue beginTransaction:withBlock:]_block_invoke
+___copy_helper_block_.53
+___destroy_helper_block_.54
+-[FMDatabaseQueue inDeferredTransaction:]
+-[FMDatabaseQueue inTransaction:]
+-[FMDatabaseQueue inSavePoint:]
+___Block_byref_object_copy_
+___Block_byref_object_dispose_
+___31-[FMDatabaseQueue inSavePoint:]_block_invoke
+___copy_helper_block_.66
+___destroy_helper_block_.67
+-[FMDatabaseQueue path]
+-[FMDatabaseQueue setPath:]
+-[FMDatabaseQueue openFlags]
+-[FMDatabaseQueue .cxx_destruct]
+_kDispatchQueueSpecificKey
+___block_descriptor_tmp.44
+___block_descriptor_tmp.55
+___block_descriptor_tmp.68
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabaseQueue.m
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabaseQueue.h
+__31-[FMDatabaseQueue inSavePoint:]_block_invoke
+__Block_byref_object_dispose_
+__Block_byref_object_copy_
+__46-[FMDatabaseQueue beginTransaction:withBlock:]_block_invoke
+__30-[FMDatabaseQueue inDatabase:]_block_invoke
+__24-[FMDatabaseQueue close]_block_invoke
+-[FMDatabase(FMDatabaseAdditions) stringForQuery:]
+-[FMDatabase(FMDatabaseAdditions) intForQuery:]
+-[FMDatabase(FMDatabaseAdditions) longForQuery:]
+-[FMDatabase(FMDatabaseAdditions) boolForQuery:]
+-[FMDatabase(FMDatabaseAdditions) doubleForQuery:]
+-[FMDatabase(FMDatabaseAdditions) dataForQuery:]
+-[FMDatabase(FMDatabaseAdditions) dateForQuery:]
+-[FMDatabase(FMDatabaseAdditions) tableExists:]
+-[FMDatabase(FMDatabaseAdditions) getSchema]
+-[FMDatabase(FMDatabaseAdditions) getTableSchema:]
+-[FMDatabase(FMDatabaseAdditions) columnExists:inTableWithName:]
+-[FMDatabase(FMDatabaseAdditions) applicationID]
+-[FMDatabase(FMDatabaseAdditions) setApplicationID:]
+-[FMDatabase(FMDatabaseAdditions) userVersion]
+-[FMDatabase(FMDatabaseAdditions) setUserVersion:]
+-[FMDatabase(FMDatabaseAdditions) columnExists:columnName:]
+-[FMDatabase(FMDatabaseAdditions) validateSQL:error:]
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabaseAdditions.m
++[FMDatabasePool databasePoolWithPath:]
++[FMDatabasePool databasePoolWithPath:flags:]
+-[FMDatabasePool initWithPath:flags:]
+-[FMDatabasePool initWithPath:]
+-[FMDatabasePool init]
+-[FMDatabasePool dealloc]
+-[FMDatabasePool executeLocked:]
+-[FMDatabasePool pushDatabaseBackInPool:]
+___41-[FMDatabasePool pushDatabaseBackInPool:]_block_invoke
+-[FMDatabasePool db]
+___20-[FMDatabasePool db]_block_invoke
+___copy_helper_block_.59
+___destroy_helper_block_.60
+-[FMDatabasePool countOfCheckedInDatabases]
+___43-[FMDatabasePool countOfCheckedInDatabases]_block_invoke
+___copy_helper_block_.62
+___destroy_helper_block_.63
+-[FMDatabasePool countOfCheckedOutDatabases]
+___44-[FMDatabasePool countOfCheckedOutDatabases]_block_invoke
+___copy_helper_block_.65
+___destroy_helper_block_.66
+-[FMDatabasePool countOfOpenDatabases]
+___38-[FMDatabasePool countOfOpenDatabases]_block_invoke
+___copy_helper_block_.68
+___destroy_helper_block_.69
+-[FMDatabasePool releaseAllDatabases]
+___37-[FMDatabasePool releaseAllDatabases]_block_invoke
+___copy_helper_block_.73
+___destroy_helper_block_.74
+-[FMDatabasePool inDatabase:]
+-[FMDatabasePool beginTransaction:withBlock:]
+-[FMDatabasePool inDeferredTransaction:]
+-[FMDatabasePool inTransaction:]
+-[FMDatabasePool inSavePoint:]
+-[FMDatabasePool path]
+-[FMDatabasePool setPath:]
+-[FMDatabasePool delegate]
+-[FMDatabasePool setDelegate:]
+-[FMDatabasePool maximumNumberOfDatabasesToCreate]
+-[FMDatabasePool setMaximumNumberOfDatabasesToCreate:]
+-[FMDatabasePool openFlags]
+-[FMDatabasePool .cxx_destruct]
+___block_descriptor_tmp.61
+___block_descriptor_tmp.64
+___block_descriptor_tmp.67
+___block_descriptor_tmp.70
+___block_descriptor_tmp.75
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabasePool.m
+/Users/domagojkulundzic/Documents/Projects/SqliteDatabase/Carthage/Checkouts/fmdb/src/fmdb/FMDatabasePool.h
+__37-[FMDatabasePool releaseAllDatabases]_block_invoke
+__38-[FMDatabasePool countOfOpenDatabases]_block_invoke
+__44-[FMDatabasePool countOfCheckedOutDatabases]_block_invoke
+__43-[FMDatabasePool countOfCheckedInDatabases]_block_invoke
+__20-[FMDatabasePool db]_block_invoke
+__41-[FMDatabasePool pushDatabaseBackInPool:]_block_invoke
+/Users/domagojkulundzic/Library/Developer/Xcode/DerivedData/fmdb-dbcdzgqrnejffwawmljifdwgttae/Build/Intermediates/fmdb.build/Release-iphoneos/FMDB iOS.build/DerivedSources/FMDB_vers.c

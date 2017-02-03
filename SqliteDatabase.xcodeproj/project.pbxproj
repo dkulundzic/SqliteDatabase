@@ -13,6 +13,7 @@
 		2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */; };
 		2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */; };
 		2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */; };
+		2F48F2111E44BAE700702A4F /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F48F2101E44BAE700702A4F /* FMDB.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,8 @@
 		2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInfo.swift; sourceTree = "<group>"; };
 		2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseService.swift; sourceTree = "<group>"; };
 		2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInfoTests.swift; sourceTree = "<group>"; };
+		2F48F20D1E44BA5200702A4F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = "../FMDB Framework/Carthage/Build/iOS/FMDB.framework"; sourceTree = "<group>"; };
+		2F48F2101E44BAE700702A4F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F48F2111E44BAE700702A4F /* FMDB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +66,7 @@
 				2F48F1E61E44B44F00702A4F /* SqliteDatabase */,
 				2F48F1F11E44B44F00702A4F /* SqliteDatabaseTests */,
 				2F48F1E51E44B44F00702A4F /* Products */,
+				2F48F20C1E44BA5100702A4F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +108,15 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
+		2F48F20C1E44BA5100702A4F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F2101E44BAE700702A4F /* FMDB.framework */,
+				2F48F20D1E44BA5200702A4F /* FMDB.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -125,6 +139,7 @@
 				2F48F1E01E44B44F00702A4F /* Frameworks */,
 				2F48F1E11E44B44F00702A4F /* Headers */,
 				2F48F1E21E44B44F00702A4F /* Resources */,
+				2F48F2121E44BAF600702A4F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -208,6 +223,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2F48F2121E44BAF600702A4F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/FMDB.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2F48F1DF1E44B44F00702A4F /* Sources */ = {
@@ -347,6 +379,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SqliteDatabase/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -367,6 +403,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SqliteDatabase/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
