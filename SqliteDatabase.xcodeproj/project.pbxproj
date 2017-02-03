@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2F48F1EE1E44B44F00702A4F /* SqliteDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F48F1E41E44B44F00702A4F /* SqliteDatabase.framework */; };
-		2F48F1F31E44B44F00702A4F /* SqliteDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F1F21E44B44F00702A4F /* SqliteDatabaseTests.swift */; };
 		2F48F1F51E44B44F00702A4F /* SqliteDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F48F1E71E44B44F00702A4F /* SqliteDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */; };
 		2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */; };
 		2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */; };
 		2F48F2111E44BAE700702A4F /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F48F2101E44BAE700702A4F /* FMDB.framework */; };
+		2F48F2141E44BB6200702A4F /* SqliteDatabaseMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */; };
+		2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +32,14 @@
 		2F48F1E71E44B44F00702A4F /* SqliteDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SqliteDatabase.h; sourceTree = "<group>"; };
 		2F48F1E81E44B44F00702A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F48F1ED1E44B44F00702A4F /* SqliteDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SqliteDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F48F1F21E44B44F00702A4F /* SqliteDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseTests.swift; sourceTree = "<group>"; };
 		2F48F1F41E44B44F00702A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInfo.swift; sourceTree = "<group>"; };
 		2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseService.swift; sourceTree = "<group>"; };
 		2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInfoTests.swift; sourceTree = "<group>"; };
 		2F48F20D1E44BA5200702A4F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = "../FMDB Framework/Carthage/Build/iOS/FMDB.framework"; sourceTree = "<group>"; };
 		2F48F2101E44BAE700702A4F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
+		2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseMappable.swift; sourceTree = "<group>"; };
+		2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseQuery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +94,8 @@
 		2F48F1F11E44B44F00702A4F /* SqliteDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				2F48F1F21E44B44F00702A4F /* SqliteDatabaseTests.swift */,
-				2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */,
+				2F48F2161E44BBDD00702A4F /* Integration tests */,
+				2F48F2151E44BBD900702A4F /* Unit tests */,
 				2F48F1F41E44B44F00702A4F /* Info.plist */,
 			);
 			path = SqliteDatabaseTests;
@@ -104,6 +106,8 @@
 			children = (
 				2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */,
 				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
+				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
+				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -115,6 +119,21 @@
 				2F48F20D1E44BA5200702A4F /* FMDB.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2F48F2151E44BBD900702A4F /* Unit tests */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */,
+			);
+			name = "Unit tests";
+			sourceTree = "<group>";
+		};
+		2F48F2161E44BBDD00702A4F /* Integration tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Integration tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
+				2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */,
+				2F48F2141E44BB6200702A4F /* SqliteDatabaseMappable.swift in Sources */,
 				2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,7 +277,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */,
-				2F48F1F31E44B44F00702A4F /* SqliteDatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

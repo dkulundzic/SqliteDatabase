@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import SqliteDatabase
+@testable import SqliteDatabase
 
 class SqliteDatabaseInfoTests: XCTestCase {
     
