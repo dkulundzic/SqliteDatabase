@@ -9,20 +9,24 @@
 import Foundation
 
 public struct Todo: SqliteDatabaseMappable {
+    public let id: String
     public let description: String
     public let completed: Bool
     
-    public init(description: String, completed: Bool = false) {
+    public init(id: String, description: String, completed: Bool = false) {
+        self.id = id
         self.description = description
         self.completed = completed
     }
     
     public init?(row: SqliteDatabaseRow) {
-        guard let description = row["Description"] as? String,
-            let completed = row["Completed"] as? Bool else {
+        guard let id = row["Id"] as? String,
+            let description = row["Description"] as? String,
+            let completed = row["IsCompleted"] as? Bool else {
                 return nil
         }
         
+        self.id = id
         self.description = description
         self.completed = completed
     }

@@ -13,7 +13,7 @@ public class SqliteDatabaseInfo {
     public static let defaultIdentifier = "com.SqliteDatabaseInfo.Default"
     public let userIdentifier: String
     
-    public init(userIdentifier: String) {
+    public init(userIdentifier: String = "") {
         self.userIdentifier = userIdentifier.isEmpty ? SqliteDatabaseInfo.defaultIdentifier: userIdentifier
     }
     

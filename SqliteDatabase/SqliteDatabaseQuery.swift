@@ -12,8 +12,14 @@ public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
     let tableName: String
     let columns: [String]
     
-    public init() {
+    var whereClause: String?
+    var limit: Int?
+    
+    public init(whereClause: String? = nil, limit: Int? = nil) {
         self.tableName = M.tableName
         self.columns = M.columns
+        
+        self.whereClause = whereClause
+        self.limit = limit
     }
 }

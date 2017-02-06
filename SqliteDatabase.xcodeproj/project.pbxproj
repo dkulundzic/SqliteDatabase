@@ -18,6 +18,9 @@
 		2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */; };
 		2F48F2231E44C16100702A4F /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2221E44C16100702A4F /* Todo.swift */; };
 		2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */; };
+		2FF327D51E486DD60078117D /* SqliteDatabaseDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327D41E486DD60078117D /* SqliteDatabaseDefinition.swift */; };
+		2FF327D71E486E2E0078117D /* SqliteDatabaseInitialisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327D61E486E2E0078117D /* SqliteDatabaseInitialisation.swift */; };
+		2FF327D91E4873F90078117D /* DefaultDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327D81E4873F90078117D /* DefaultDefinition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseRowTransform.swift; sourceTree = "<group>"; };
 		2F48F2221E44C16100702A4F /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests.swift; sourceTree = "<group>"; };
+		2FF327D41E486DD60078117D /* SqliteDatabaseDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseDefinition.swift; sourceTree = "<group>"; };
+		2FF327D61E486E2E0078117D /* SqliteDatabaseInitialisation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInitialisation.swift; sourceTree = "<group>"; };
+		2FF327D81E4873F90078117D /* DefaultDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultDefinition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				2F48F2221E44C16100702A4F /* Todo.swift */,
+				2FF327D81E4873F90078117D /* DefaultDefinition.swift */,
 				2F48F1FE1E44B46300702A4F /* Source */,
 				2F48F21D1E44C07900702A4F /* Supporting files */,
 			);
@@ -110,10 +117,10 @@
 		2F48F1FE1E44B46300702A4F /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
 				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
-				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
 				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
+				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
 				2F48F21B1E44C06700702A4F /* Utility */,
 			);
 			name = Source;
@@ -148,6 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */,
+				2FF327D41E486DD60078117D /* SqliteDatabaseDefinition.swift */,
+				2FF327D61E486E2E0078117D /* SqliteDatabaseInitialisation.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -290,6 +299,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FF327D91E4873F90078117D /* DefaultDefinition.swift in Sources */,
+				2FF327D51E486DD60078117D /* SqliteDatabaseDefinition.swift in Sources */,
+				2FF327D71E486E2E0078117D /* SqliteDatabaseInitialisation.swift in Sources */,
 				2F48F2231E44C16100702A4F /* Todo.swift in Sources */,
 				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
 				2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */,

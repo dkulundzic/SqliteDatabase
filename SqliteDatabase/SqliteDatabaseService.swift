@@ -59,22 +59,23 @@ public class SqliteDatabaseService {
     }
     
     private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
-        var rows = [SqliteDatabaseRow]()
-        rows.append(
-            ["Description": "Test1", "Completed": true]
-        )
-        rows.append(
-            ["Description": "Test2", "Completed": true]
-        )
-        rows.append(
-            ["Description": "Test3", "Completed": false]
-        )
+//        var rows = [SqliteDatabaseRow]()
+//        
+//        rows.append(
+//            ["Description": "Test1", "Completed": true]
+//        )
+//        rows.append(
+//            ["Description": "Test2", "Completed": true]
+//        )
+//        rows.append(
+//            ["Description": "Test3", "Completed": false]
+//        )
+//        
+//        completion(rows)
+//        
+//        return
         
-        completion(rows)
-        
-        return
-        
-        let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "?"
+        let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "*"
         let sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
         
         if self.isLogging {
@@ -82,7 +83,7 @@ public class SqliteDatabaseService {
         }
         
         do {
-            let resultSet = try database.executeQuery("", values: [])
+            let resultSet = try database.executeQuery(sqlStatement, values: [])
             
             defer {
                 resultSet.close()
