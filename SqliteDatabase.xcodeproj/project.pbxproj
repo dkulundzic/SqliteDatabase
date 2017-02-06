@@ -126,13 +126,8 @@
 			isa = PBXGroup;
 			children = (
 				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
-				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
-				2FF327DC1E487E380078117D /* SqliteDatabaseUpdateOperation.swift */,
-				2FF327DE1E487E7F0078117D /* SqliteDatabaseInsert.swift */,
-				2FF327E01E487EB00078117D /* SqliteDatabaseDelete.swift */,
-				2FF327E21E48A7060078117D /* SqliteDatabaseUpdate.swift */,
-				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
-				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
+				2FF327E51E48AEFB0078117D /* Transformation layer */,
+				2FF327E41E48AEE80078117D /* Database operations */,
 				2F48F21B1E44C06700702A4F /* Utility */,
 			);
 			name = Source;
@@ -180,6 +175,27 @@
 				2F48F1E81E44B44F00702A4F /* Info.plist */,
 			);
 			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		2FF327E41E48AEE80078117D /* Database operations */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+				2FF327DC1E487E380078117D /* SqliteDatabaseUpdateOperation.swift */,
+				2FF327DE1E487E7F0078117D /* SqliteDatabaseInsert.swift */,
+				2FF327E01E487EB00078117D /* SqliteDatabaseDelete.swift */,
+				2FF327E21E48A7060078117D /* SqliteDatabaseUpdate.swift */,
+			);
+			name = "Database operations";
+			sourceTree = "<group>";
+		};
+		2FF327E51E48AEFB0078117D /* Transformation layer */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
+				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
+			);
+			name = "Transformation layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
