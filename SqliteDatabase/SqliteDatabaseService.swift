@@ -106,14 +106,20 @@ public class SqliteDatabaseService {
     }
     
     private func resolveDelete<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, database: FMDatabase) -> Bool {
-        return true
+        let sqlStatement = "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause)"
+        
+        if isLogging {
+            print(sqlStatement)
+        }
+        
+        return database.executeStatements(sqlStatement)
     }
     
     private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "*"
         var sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
         
-        if let whereConstraint = query.whereClause {
+        if let whereConstraint = query.whereClause, !whereConstraint.isEmpty {
             sqlStatement += " WHERE \(whereConstraint)"
         }
         
@@ -133,6 +139,7 @@ public class SqliteDatabaseService {
             }
             
             var rows = [SqliteDatabaseRow]()
+            
             while resultSet.next() {
                 guard let row = resultSet.resultDictionary() as? SqliteDatabaseRow else {
                     continue

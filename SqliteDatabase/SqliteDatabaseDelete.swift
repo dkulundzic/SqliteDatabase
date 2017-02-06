@@ -9,5 +9,11 @@
 import Foundation
 
 public class SqliteDatabaseDelete<M: SqliteDatabaseMappable>: SqliteDatabaseUpdate<M>  {
+    public let whereClause: String
     
+    public init(whereClause: String) {
+        self.whereClause = whereClause
+        
+        super.init()
+    }
 }

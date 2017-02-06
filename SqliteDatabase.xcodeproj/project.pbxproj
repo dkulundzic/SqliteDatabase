@@ -128,8 +128,8 @@
 				2FF327DC1E487E380078117D /* SqliteDatabaseUpdate.swift */,
 				2FF327DE1E487E7F0078117D /* SqliteDatabaseInsert.swift */,
 				2FF327E01E487EB00078117D /* SqliteDatabaseDelete.swift */,
-				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
 				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
+				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
 				2F48F21B1E44C06700702A4F /* Utility */,
 			);
 			name = Source;
