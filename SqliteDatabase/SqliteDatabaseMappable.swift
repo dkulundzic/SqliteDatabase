@@ -15,7 +15,7 @@ public protocol SqliteDatabaseMappable {
     static var columns: [String] { get }
     
     init?(row: SqliteDatabaseRow)
-    var values: [AnyObject?] { get }
+    var values: [Any?] { get }
 }
 
 extension SqliteDatabaseMappable {
@@ -31,7 +31,7 @@ extension SqliteDatabaseMappable {
         return nil
     }
     
-    public var values: [AnyObject?] {
+    public var values: [Any?] {
         return []
     }
 }

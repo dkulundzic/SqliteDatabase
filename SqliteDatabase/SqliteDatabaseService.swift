@@ -87,6 +87,8 @@ public class SqliteDatabaseService {
             return resolveInsert(insert: insert, database: database)
         } else if let delete = update as? SqliteDatabaseDelete {
             return resolveDelete(delete: delete, database: database)
+        } else if let update = update as? SqliteDatabaseUpdate {
+            return resolveUpdate(update: update, database: database)
         } else {
             return false
         }
@@ -102,7 +104,7 @@ public class SqliteDatabaseService {
             print(sqlStatement)
         }
         
-        return database.executeUpdate(sqlStatement, withArgumentsIn: insert.values)
+        return database.executeUpdate(sqlStatement, withArgumentsIn: insert.values as [Any])
     }
     
     private func resolveDelete<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, database: FMDatabase) -> Bool {
@@ -113,6 +115,17 @@ public class SqliteDatabaseService {
         }
         
         return database.executeStatements(sqlStatement)
+    }
+    
+    private func resolveUpdate<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>, database: FMDatabase) -> Bool {
+        let updatePairString = update.columns.map({ return "\($0) = ?" }).joined(separator: ",")
+        let sqlStatement = "UPDATE \(update.tableName) SET \(updatePairString) WHERE \(update.whereClause)"
+        
+        if isLogging {
+            print(sqlStatement)
+        }
+        
+        return database.executeUpdate(sqlStatement, withArgumentsIn: update.values)
     }
     
     private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {

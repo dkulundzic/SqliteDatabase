@@ -42,7 +42,7 @@ extension Todo: SqliteDatabaseMappable {
         ]
     }
     
-    public var values: [AnyObject?] {
+    public var values: [Any?] {
         return [id, description, completed].map({ $0 as AnyObject?})
     }
     

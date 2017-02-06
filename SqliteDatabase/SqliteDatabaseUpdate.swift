@@ -1,5 +1,5 @@
 //
-//  SqliteDatabaseInsert.swift
+//  SqliteDatabaseUpdate.swift
 //  SqliteDatabase
 //
 //  Created by Domagoj Kulundžić on 06/02/17.
@@ -8,24 +8,23 @@
 
 import Foundation
 
-public class SqliteDatabaseInsert<M: SqliteDatabaseMappable>: SqliteDatabaseUpdateOperation<M> {
+public class SqliteDatabaseUpdate<M: SqliteDatabaseMappable>: SqliteDatabaseUpdateOperation<M> {
     public let columns: [String]
     public let values: [Any?]
-    public let replace: Bool
+    public let whereClause: String
     
-    public init(mappable: M, replace: Bool = false) {
+    public init(mappable: M, whereClause: String) {
         self.columns = M.columns
         self.values = mappable.values
-        self.replace = replace
+        self.whereClause = whereClause
         
         super.init()
     }
     
-    public init(columns: [String], values: [Any?], replace: Bool = false) {
+    public init(columns: [String], values: [Any?], whereClause: String) {
         self.columns = columns
         self.values = values
-        
-        self.replace = replace
+        self.whereClause = whereClause
         
         super.init()
     }
