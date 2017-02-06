@@ -39,27 +39,27 @@ class SqliteDatabaseServiceTests: XCTestCase {
 //        }
     }
     
-//    func test_Insertion() {
-//        let todo = Todo(id: UUID().uuidString, description: "Take the girl out", completed: true)
-//        let insert = SqliteDatabaseInsert(mappable: todo)
-//        
-//        var success = false
-//        
-//        service.executeUpdateOperation(update: insert, completion: { (result) in
-//            success = result
-//        })
-//        
-//        if success {
-//            self.service.executeQuery(query: SqliteDatabaseQuery<Todo>(whereClause: "Id = '\(todo.id)'")) { (rows) in
-//                XCTAssert(rows.count == 1, "As the service returned \"true\", the specified row should be present in the database, but was not found.")
-//            }
-//        } else {
-//            self.service.executeQuery(query: SqliteDatabaseQuery<Todo>(whereClause: "Id = '\(todo.id)'")) { (rows) in
-//                XCTAssert(rows.count == 0, "As the service returned \"false\", the specified row should not be present in the database, but was found.")
-//            }
-//        }
-//    }
-//    
+    func test_Insertion() {
+        let todo = Todo(description: "Take the girl out", completed: true)
+        let insert = SqliteDatabaseInsert(mappable: todo)
+        
+        var success = false
+        
+        service.executeUpdateOperation(update: insert, completion: { (result) in
+            success = result
+        })
+        
+        if success {
+            self.service.executeQuery(query: SqliteDatabaseQuery<Todo>(whereClause: "Description == '\(todo.description)'")) { (rows) in
+                XCTAssert(rows.count == 1, "As the service returned \"true\", the specified row should be present in the database, but was not found.")
+            }
+        } else {
+            self.service.executeQuery(query: SqliteDatabaseQuery<Todo>(whereClause: "Description == '\(todo.description)'")) { (rows) in
+                XCTAssert(rows.count == 0, "As the service returned \"false\", the specified row should not be present in the database, but was found.")
+            }
+        }
+    }
+//
 //    func test_UpdateImplicit() {
 //        let todo = Todo(id: "25F98F0A-AAB9-4A16-AF60-283C005B3FD9", description: "Read a really good book")
 //        let update = SqliteDatabaseUpdate(mappable: todo, whereClause: "Id == '\(todo.id)'")

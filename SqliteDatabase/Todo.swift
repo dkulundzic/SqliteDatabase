@@ -9,12 +9,11 @@
 import Foundation
 
 public struct Todo {
-    public let id: String
+    public var id: Int!
     public let description: String
     public let completed: Bool
     
-    public init(id: String, description: String, completed: Bool = false) {
-        self.id = id
+    public init(description: String, completed: Bool = false) {
         self.description = description
         self.completed = completed
     }
@@ -23,7 +22,7 @@ public struct Todo {
 extension Todo: SqliteDatabaseMappable {
     
     public init?(row: SqliteDatabaseRow) {
-        guard let id = row["Id"] as? String,
+        guard let id = row["Id"] as? Int,
             let description = row["Description"] as? String,
             let completed = row["IsCompleted"] as? Bool else {
                 return nil
@@ -36,14 +35,13 @@ extension Todo: SqliteDatabaseMappable {
     
     public static var columns: [String] {
         return [
-            "Id",
             "Description",
             "IsCompleted"
         ]
     }
     
     public var values: [Any?] {
-        return [id, description, completed].map({ $0 as AnyObject?})
+        return [description, completed].map({ $0 as AnyObject?})
     }
     
 }
