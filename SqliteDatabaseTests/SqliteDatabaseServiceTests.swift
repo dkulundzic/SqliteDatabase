@@ -45,7 +45,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
         
         var success = false
         
-        service.executeUpdate(update: insert, completion: { (result) in
+        service.executeUpdateOperation(update: insert, completion: { (result) in
             success = result
         })
         
@@ -63,7 +63,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
     func test_Deletion() {
         let delete = SqliteDatabaseDelete<Todo>(whereClause: "1 = 1")
         
-        service.executeUpdate(update: delete) { (_) in }
+        service.executeUpdateOperation(update: delete) { (_) in }
         service.executeQuery(query: SqliteDatabaseQuery<Todo>()) { (rows) in
             XCTAssert(rows.count == 0, "The delete was unsuccessful.")
         }

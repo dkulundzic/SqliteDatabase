@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SqliteDatabaseDelete<M: SqliteDatabaseMappable>: SqliteDatabaseUpdate<M>  {
+public class SqliteDatabaseDelete<M: SqliteDatabaseMappable>: SqliteDatabaseUpdateOperation<M>  {
     public let whereClause: String
     
     public init(whereClause: String) {

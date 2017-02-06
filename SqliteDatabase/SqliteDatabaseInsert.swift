@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SqliteDatabaseInsert<M: SqliteDatabaseMappable>: SqliteDatabaseUpdate<M> {
+public class SqliteDatabaseInsert<M: SqliteDatabaseMappable>: SqliteDatabaseUpdateOperation<M> {
     public let columns: [String]
     public let values: [AnyObject?]
     public let replace: Bool

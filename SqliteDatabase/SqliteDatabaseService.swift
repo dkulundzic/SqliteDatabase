@@ -66,14 +66,14 @@ public class SqliteDatabaseService {
     // MARK: Updates
     // MARK: -
     
-    public func executeUpdate<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>, completion: @escaping (Bool) -> Void) {
+    public func executeUpdateOperation<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdateOperation<M>, completion: @escaping (Bool) -> Void) {
         databaseQueue.inTransaction { (database, rollback) in
             guard let database = database else {
                 return
             }
             
             completion(
-                self.resolveUpdate(database: database, update: update)
+                self.resolveUpdateOperation(database: database, update: update)
             )
         }
     }
@@ -82,7 +82,7 @@ public class SqliteDatabaseService {
     // MARK: Helpers
     // MARK: -
     
-    private func resolveUpdate<M: SqliteDatabaseMappable>(database: FMDatabase, update: SqliteDatabaseUpdate<M>) -> Bool {
+    private func resolveUpdateOperation<M: SqliteDatabaseMappable>(database: FMDatabase, update: SqliteDatabaseUpdateOperation<M>) -> Bool {
         if let insert = update as? SqliteDatabaseInsert {
             return resolveInsert(insert: insert, database: database)
         } else if let delete = update as? SqliteDatabaseDelete {

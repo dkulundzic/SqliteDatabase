@@ -1,5 +1,5 @@
 //
-//  SqliteDatabaseUpdate.swift
+//  SqliteDatabaseUpdateOperation.swift
 //  SqliteDatabase
 //
 //  Created by Domagoj Kulundžić on 06/02/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SqliteDatabaseUpdate<M: SqliteDatabaseMappable> {
+public class SqliteDatabaseUpdateOperation<M: SqliteDatabaseMappable> {
     public let tableName: String
     
     public init() {
