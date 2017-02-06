@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Todo: SqliteDatabaseMappable {
+public struct Todo {
     public let id: String
     public let description: String
     public let completed: Bool
@@ -18,6 +18,9 @@ public struct Todo: SqliteDatabaseMappable {
         self.description = description
         self.completed = completed
     }
+}
+
+extension Todo: SqliteDatabaseMappable {
     
     public init?(row: SqliteDatabaseRow) {
         guard let id = row["Id"] as? String,
@@ -30,4 +33,17 @@ public struct Todo: SqliteDatabaseMappable {
         self.description = description
         self.completed = completed
     }
+    
+    public static var columns: [String] {
+        return [
+            "Id",
+            "Description",
+            "IsCompleted"
+        ]
+    }
+    
+    public var values: [AnyObject?] {
+        return [id, description, completed].map({ $0 as AnyObject?})
+    }
+    
 }

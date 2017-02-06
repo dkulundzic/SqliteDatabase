@@ -26,6 +26,10 @@ public class SqliteDatabaseService {
         self.databaseQueue = FMDatabaseQueue(path: databaseInfo.getDatabasePath())
     }
     
+    // MARK: -
+    // MARK: Querying
+    // MARK: -
+    
     public func executeQuery<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
         databaseQueue.inTransaction { (database, rollback) in
             guard let database = database else {
@@ -58,23 +62,54 @@ public class SqliteDatabaseService {
         }
     }
     
-    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
-//        var rows = [SqliteDatabaseRow]()
-//        
-//        rows.append(
-//            ["Description": "Test1", "Completed": true]
-//        )
-//        rows.append(
-//            ["Description": "Test2", "Completed": true]
-//        )
-//        rows.append(
-//            ["Description": "Test3", "Completed": false]
-//        )
-//        
-//        completion(rows)
-//        
-//        return
+    // MARK: -
+    // MARK: Updates
+    // MARK: -
+    
+    public func executeUpdate<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>, completion: @escaping (Bool) -> Void) {
+        databaseQueue.inTransaction { (database, rollback) in
+            guard let database = database else {
+                return
+            }
+            
+            completion(
+                self.resolveUpdate(database: database, update: update)
+            )
+        }
+    }
+    
+    // MARK: -
+    // MARK: Helpers
+    // MARK: -
+    
+    private func resolveUpdate<M: SqliteDatabaseMappable>(database: FMDatabase, update: SqliteDatabaseUpdate<M>) -> Bool {
+        if let insert = update as? SqliteDatabaseInsert {
+            return resolveInsert(insert: insert, database: database)
+        } else if let delete = update as? SqliteDatabaseDelete {
+            return resolveDelete(delete: delete, database: database)
+        } else {
+            return false
+        }
+    }
+    
+    private func resolveInsert<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>, database: FMDatabase) -> Bool {
+        let operation = insert.replace ? "INSERT OR REPLACE": "INSERT"
+        let columnsString = insert.columns.joined(separator: ",")
+        let placeholders = insert.values.map({ _ in "?" }).joined(separator: ",")
+        let sqlStatement = "\(operation) INTO \(insert.tableName) (\(columnsString)) VALUES (\(placeholders))"
         
+        if isLogging {
+            print(sqlStatement)
+        }
+        
+        return database.executeUpdate(sqlStatement, withArgumentsIn: insert.values)
+    }
+    
+    private func resolveDelete<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, database: FMDatabase) -> Bool {
+        return true
+    }
+    
+    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "*"
         var sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
         

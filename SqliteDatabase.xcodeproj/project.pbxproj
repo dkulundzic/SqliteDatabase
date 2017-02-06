@@ -21,6 +21,9 @@
 		2FF327D51E486DD60078117D /* SqliteDatabaseDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327D41E486DD60078117D /* SqliteDatabaseDefinition.swift */; };
 		2FF327D71E486E2E0078117D /* SqliteDatabaseInitialisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327D61E486E2E0078117D /* SqliteDatabaseInitialisation.swift */; };
 		2FF327D91E4873F90078117D /* DefaultDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327D81E4873F90078117D /* DefaultDefinition.swift */; };
+		2FF327DD1E487E380078117D /* SqliteDatabaseUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327DC1E487E380078117D /* SqliteDatabaseUpdate.swift */; };
+		2FF327DF1E487E7F0078117D /* SqliteDatabaseInsert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327DE1E487E7F0078117D /* SqliteDatabaseInsert.swift */; };
+		2FF327E11E487EB00078117D /* SqliteDatabaseDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF327E01E487EB00078117D /* SqliteDatabaseDelete.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,9 @@
 		2FF327D41E486DD60078117D /* SqliteDatabaseDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseDefinition.swift; sourceTree = "<group>"; };
 		2FF327D61E486E2E0078117D /* SqliteDatabaseInitialisation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInitialisation.swift; sourceTree = "<group>"; };
 		2FF327D81E4873F90078117D /* DefaultDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultDefinition.swift; sourceTree = "<group>"; };
+		2FF327DC1E487E380078117D /* SqliteDatabaseUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseUpdate.swift; sourceTree = "<group>"; };
+		2FF327DE1E487E7F0078117D /* SqliteDatabaseInsert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInsert.swift; sourceTree = "<group>"; };
+		2FF327E01E487EB00078117D /* SqliteDatabaseDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseDelete.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,9 @@
 			children = (
 				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
 				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+				2FF327DC1E487E380078117D /* SqliteDatabaseUpdate.swift */,
+				2FF327DE1E487E7F0078117D /* SqliteDatabaseInsert.swift */,
+				2FF327E01E487EB00078117D /* SqliteDatabaseDelete.swift */,
 				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
 				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
 				2F48F21B1E44C06700702A4F /* Utility */,
@@ -304,10 +313,13 @@
 				2FF327D71E486E2E0078117D /* SqliteDatabaseInitialisation.swift in Sources */,
 				2F48F2231E44C16100702A4F /* Todo.swift in Sources */,
 				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
+				2FF327DF1E487E7F0078117D /* SqliteDatabaseInsert.swift in Sources */,
+				2FF327DD1E487E380078117D /* SqliteDatabaseUpdate.swift in Sources */,
 				2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */,
 				2F48F2141E44BB6200702A4F /* SqliteDatabaseMappable.swift in Sources */,
 				2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */,
 				2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */,
+				2FF327E11E487EB00078117D /* SqliteDatabaseDelete.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
