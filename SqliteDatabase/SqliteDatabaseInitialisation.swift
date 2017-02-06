@@ -57,6 +57,10 @@ final public class SqliteDatabaseInitialisation {
         database.executeStatements(
             triggerCreationStatement()
         )
+        
+        if let customStatement = customStatement() {
+            database.executeStatements(customStatement)
+        }
     }
     
     private func tableCreationStatement() -> String {
@@ -69,5 +73,13 @@ final public class SqliteDatabaseInitialisation {
     
     private func triggerCreationStatement() -> String {
         return databaseDefinition.triggerDefinition.joined(separator: "")
+    }
+    
+    private func customStatement() -> String? {
+        guard let customStatements = databaseDefinition.customStatements else {
+            return nil
+        }
+        
+        return customStatements.joined(separator: "")
     }
 }

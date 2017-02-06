@@ -12,4 +12,6 @@ public protocol SqliteDatabaseDefinitionProtocol {
     var tableDefinition: [String] { get }
     var viewDefinition: [String] { get }
     var triggerDefinition: [String] { get }
+    
+    var customStatements:[String]? { get }
 }
