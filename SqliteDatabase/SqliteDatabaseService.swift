@@ -76,7 +76,15 @@ public class SqliteDatabaseService {
 //        return
         
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "*"
-        let sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
+        var sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
+        
+        if let whereConstraint = query.whereClause {
+            sqlStatement += " WHERE \(whereConstraint)"
+        }
+        
+        if let limitConstraint = query.limit {
+            sqlStatement += " LIMIT \(limitConstraint)"
+        }
         
         if self.isLogging {
             print(sqlStatement)
