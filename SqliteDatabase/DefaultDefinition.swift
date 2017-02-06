@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SqliteDatabase
 
 public class DefaultDefinition: SqliteDatabaseDefinitionProtocol {
     
