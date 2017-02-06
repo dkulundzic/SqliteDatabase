@@ -15,6 +15,9 @@
 		2F48F2111E44BAE700702A4F /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F48F2101E44BAE700702A4F /* FMDB.framework */; };
 		2F48F2141E44BB6200702A4F /* SqliteDatabaseMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */; };
 		2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */; };
+		2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */; };
+		2F48F2231E44C16100702A4F /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2221E44C16100702A4F /* Todo.swift */; };
+		2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		2F48F2101E44BAE700702A4F /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = Carthage/Build/iOS/FMDB.framework; sourceTree = "<group>"; };
 		2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseMappable.swift; sourceTree = "<group>"; };
 		2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseQuery.swift; sourceTree = "<group>"; };
+		2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseRowTransform.swift; sourceTree = "<group>"; };
+		2F48F2221E44C16100702A4F /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
+		2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +90,9 @@
 		2F48F1E61E44B44F00702A4F /* SqliteDatabase */ = {
 			isa = PBXGroup;
 			children = (
+				2F48F2221E44C16100702A4F /* Todo.swift */,
 				2F48F1FE1E44B46300702A4F /* Source */,
-				2F48F1E71E44B44F00702A4F /* SqliteDatabase.h */,
-				2F48F1E81E44B44F00702A4F /* Info.plist */,
+				2F48F21D1E44C07900702A4F /* Supporting files */,
 			);
 			path = SqliteDatabase;
 			sourceTree = "<group>";
@@ -104,10 +110,11 @@
 		2F48F1FE1E44B46300702A4F /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */,
-				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
 				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
+				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
+				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
 				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+				2F48F21B1E44C06700702A4F /* Utility */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -125,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */,
+				2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */,
 			);
 			name = "Unit tests";
 			sourceTree = "<group>";
@@ -134,6 +142,23 @@
 			children = (
 			);
 			name = "Integration tests";
+			sourceTree = "<group>";
+		};
+		2F48F21B1E44C06700702A4F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F2061E44B59600702A4F /* SqliteDatabaseInfo.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		2F48F21D1E44C07900702A4F /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F1E71E44B44F00702A4F /* SqliteDatabase.h */,
+				2F48F1E81E44B44F00702A4F /* Info.plist */,
+			);
+			name = "Supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,9 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F48F2231E44C16100702A4F /* Todo.swift in Sources */,
 				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
 				2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */,
 				2F48F2141E44BB6200702A4F /* SqliteDatabaseMappable.swift in Sources */,
+				2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */,
 				2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests.swift in Sources */,
 				2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,6 +469,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SqliteDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Farmeron.SqliteDatabaseTests;
@@ -453,6 +485,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SqliteDatabaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Farmeron.SqliteDatabaseTests;
@@ -480,6 +516,7 @@
 				2F48F1FA1E44B44F00702A4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F48F1FB1E44B44F00702A4F /* Build configuration list for PBXNativeTarget "SqliteDatabaseTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +525,7 @@
 				2F48F1FD1E44B44F00702A4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

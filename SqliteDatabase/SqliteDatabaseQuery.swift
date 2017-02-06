@@ -12,7 +12,7 @@ public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
     let tableName: String
     let columns: [String]
     
-    public init(sqliteDatabaseMappable: M) {
+    public init() {
         self.tableName = M.tableName
         self.columns = M.columns
     }

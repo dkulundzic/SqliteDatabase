@@ -19,11 +19,11 @@ public protocol SqliteDatabaseMappable {
 }
 
 extension SqliteDatabaseMappable {
-    static var tableName: String {
+    public static var tableName: String {
         return String(describing: self)
     }
     
-    static var columns: [String] {
+    public static var columns: [String] {
         return []
     }
     
@@ -31,7 +31,7 @@ extension SqliteDatabaseMappable {
         return nil
     }
     
-    var values: [AnyObject?] {
+    public var values: [AnyObject?] {
         return []
     }
 }
