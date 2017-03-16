@@ -54,7 +54,9 @@ public class SqliteDatabaseService {
                         transformedRows
                     )
                 })
-            } catch { }
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
