@@ -20,6 +20,7 @@
 		2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */; };
 		4894CD7E1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */; };
 		4894CD801E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */; };
+		4894CD821E7A8F9800F6DD97 /* SqliteDatabaseInsert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894CD811E7A8F9800F6DD97 /* SqliteDatabaseInsert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests_Querying.swift; sourceTree = "<group>"; };
 		4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseDelete.swift; sourceTree = "<group>"; };
 		4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests_Deletion.swift; sourceTree = "<group>"; };
+		4894CD811E7A8F9800F6DD97 /* SqliteDatabaseInsert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseInsert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			children = (
 				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
 				4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */,
+				4894CD811E7A8F9800F6DD97 /* SqliteDatabaseInsert.swift */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F48F2231E44C16100702A4F /* Todo.swift in Sources */,
+				4894CD821E7A8F9800F6DD97 /* SqliteDatabaseInsert.swift in Sources */,
 				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
 				2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */,
 				4894CD7E1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift in Sources */,
