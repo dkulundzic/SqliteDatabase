@@ -113,7 +113,7 @@
 				2F48F2131E44BB6200702A4F /* SqliteDatabaseMappable.swift */,
 				2F48F2071E44B59600702A4F /* SqliteDatabaseService.swift */,
 				2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */,
-				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+				4894CD7C1E7A840C00F6DD97 /* Operations */,
 				2F48F21B1E44C06700702A4F /* Utility */,
 			);
 			name = Source;
@@ -159,6 +159,14 @@
 				2F48F1E81E44B44F00702A4F /* Info.plist */,
 			);
 			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		4894CD7C1E7A840C00F6DD97 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+			);
+			name = Operations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

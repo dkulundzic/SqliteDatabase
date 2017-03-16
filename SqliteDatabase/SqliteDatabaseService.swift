@@ -43,6 +43,7 @@ public class SqliteDatabaseService {
     // MARK: -
     
     fileprivate func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
+        
         var rows = [SqliteDatabaseRow]()
         rows.append(
             ["Description": "Test1", "Completed": true]
@@ -66,13 +67,14 @@ public class SqliteDatabaseService {
         }
         
         do {
-            let resultSet = try database.executeQuery("", values: [])
+            let resultSet = try database.executeQuery(sqlStatement, values: [])
             
             defer {
                 resultSet.close()
             }
             
             var rows = [SqliteDatabaseRow]()
+            
             while resultSet.next() {
                 guard let row = resultSet.resultDictionary() as? SqliteDatabaseRow else {
                     continue
