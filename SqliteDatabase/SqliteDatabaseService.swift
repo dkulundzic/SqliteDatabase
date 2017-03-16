@@ -16,51 +16,33 @@ public enum SqliteDatabaseServiceError: Error {
 
 public class SqliteDatabaseService {
     
+    // MARK: -
+    // MARK: Public properties
+    // MARK: -
+    
     public var isLogging = true
     
-    private let databaseQueue: FMDatabaseQueue
-    private let databaseInfo: SqliteDatabaseInfo
+    // MARK: -
+    // MARK: Private properties
+    // MARK: -
+    
+    fileprivate let databaseQueue: FMDatabaseQueue
+    fileprivate let databaseInfo: SqliteDatabaseInfo
+    
+    // MARK: -
+    // MARK: Initialiser
+    // MARK: -
     
     public init(databaseInfo: SqliteDatabaseInfo) {
         self.databaseInfo = databaseInfo
         self.databaseQueue = FMDatabaseQueue(path: databaseInfo.getDatabasePath())
     }
     
-    public func executeQuery<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
-        databaseQueue.inTransaction { (database, rollback) in
-            guard let database = database else {
-                return
-            }
-            
-            do {
-                try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
-                    completion(rows)
-                })
-            } catch { }
-        }
-    }
+    // MARK: -
+    // MARK: Private methods
+    // MARK: -
     
-    public func executeQuery<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R) -> Void) {
-        databaseQueue.inTransaction { (database, rollback) in
-            guard let database = database else {
-                return
-            }
-            
-            do {
-                try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
-                    let transformedRows = transform.transform(rows: rows)
-                    
-                    completion(
-                        transformedRows
-                    )
-                })
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
+    fileprivate func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
         var rows = [SqliteDatabaseRow]()
         rows.append(
             ["Description": "Test1", "Completed": true]
@@ -106,6 +88,51 @@ public class SqliteDatabaseService {
             }
             
             throw SqliteDatabaseServiceError.unknown
+        }
+    }
+    
+}
+
+// MARK: -
+// MARK: Querying
+// MARK: -
+
+
+extension SqliteDatabaseService {
+    
+    public func executeQuery<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
+        databaseQueue.inTransaction { (database, rollback) in
+            guard let database = database else {
+                return
+            }
+            
+            do {
+                try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
+                    completion(rows)
+                })
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    public func executeQuery<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R) -> Void) {
+        databaseQueue.inTransaction { (database, rollback) in
+            guard let database = database else {
+                return
+            }
+            
+            do {
+                try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
+                    let transformedRows = transform.transform(rows: rows)
+                    
+                    completion(
+                        transformedRows
+                    )
+                })
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
