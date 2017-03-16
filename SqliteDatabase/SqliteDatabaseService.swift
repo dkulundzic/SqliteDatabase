@@ -42,6 +42,17 @@ public class SqliteDatabaseService {
     // MARK: Private methods
     // MARK: -
     
+    fileprivate func executeInTransaction(operation: @escaping (FMDatabase, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        databaseQueue.inTransaction { (database, rollback) in
+            guard let database = database, let rollback = rollback else {
+                print("Transaction failed, couldn't retrieve FMDatabase or the rollback parameter.")
+                
+                return
+            }
+            operation(database, rollback)
+        }
+    }
+    
     fileprivate func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
         
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "?"
@@ -86,27 +97,24 @@ public class SqliteDatabaseService {
 
 extension SqliteDatabaseService {
     public func execute<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
-        databaseQueue.inTransaction { (database, rollback) in
-            guard let database = database else {
-                return
-            }
-            
+        
+        let operation = { (database: FMDatabase, rollback: UnsafeMutablePointer<ObjCBool>) in
             do {
                 try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
                     completion(rows)
                 })
             } catch {
                 print(error.localizedDescription)
+                completion([])
             }
         }
+        
+        executeInTransaction(operation: operation)
     }
     
     public func execute<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R) -> Void) {
-        databaseQueue.inTransaction { (database, rollback) in
-            guard let database = database else {
-                return
-            }
-            
+        
+        let operation = { (database: FMDatabase, rollback: UnsafeMutablePointer<ObjCBool>) in
             do {
                 try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
                     let transformedRows = transform.transform(rows: rows)
@@ -119,6 +127,8 @@ extension SqliteDatabaseService {
                 print(error.localizedDescription)
             }
         }
+        
+        executeInTransaction(operation: operation)
     }
 }
 
@@ -127,11 +137,28 @@ extension SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: (Bool) -> Void) {
+    
+    private func deletionSqlStatement<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> String {
+        return "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);".trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: @escaping (Bool) -> Void) {
+        let sqlStatement = deletionSqlStatement(delete: delete)
         
+        executeInTransaction { (database, rollback) in
+            let success = database.executeStatements(sqlStatement)
+            completion(success)
+        }
     }
     
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> Bool {
-        return false
+        let sqlStatement = deletionSqlStatement(delete: delete)
+        var success = false
+        
+        executeInTransaction { (database, rollback) in
+            success = database.executeStatements(sqlStatement)
+        }
+        
+        return success
     }
 }

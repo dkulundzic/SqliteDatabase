@@ -17,8 +17,9 @@
 		2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */; };
 		2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */; };
 		2F48F2231E44C16100702A4F /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2221E44C16100702A4F /* Todo.swift */; };
-		2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */; };
+		2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */; };
 		4894CD7E1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */; };
+		4894CD801E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,8 +47,9 @@
 		2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseQuery.swift; sourceTree = "<group>"; };
 		2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseRowTransform.swift; sourceTree = "<group>"; };
 		2F48F2221E44C16100702A4F /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
-		2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests.swift; sourceTree = "<group>"; };
+		2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests_Querying.swift; sourceTree = "<group>"; };
 		4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseDelete.swift; sourceTree = "<group>"; };
+		4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests_Deletion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */,
-				2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */,
+				2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */,
+				4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */,
 			);
 			name = "Unit tests";
 			sourceTree = "<group>";
@@ -315,8 +318,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests.swift in Sources */,
+				2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift in Sources */,
 				2F48F20B1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift in Sources */,
+				4894CD801E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
