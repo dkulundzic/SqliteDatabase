@@ -18,6 +18,7 @@
 		2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */; };
 		2F48F2231E44C16100702A4F /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2221E44C16100702A4F /* Todo.swift */; };
 		2F48F2291E44CA1800702A4F /* SqliteDatabaseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */; };
+		4894CD7E1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		2F48F21E1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseRowTransform.swift; sourceTree = "<group>"; };
 		2F48F2221E44C16100702A4F /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseServiceTests.swift; sourceTree = "<group>"; };
+		4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteDatabaseDelete.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				2F48F2171E44BC0600702A4F /* SqliteDatabaseQuery.swift */,
+				4894CD7D1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				2F48F2231E44C16100702A4F /* Todo.swift in Sources */,
 				2F48F2091E44B59600702A4F /* SqliteDatabaseService.swift in Sources */,
 				2F48F2181E44BC0600702A4F /* SqliteDatabaseQuery.swift in Sources */,
+				4894CD7E1E7A84D500F6DD97 /* SqliteDatabaseDelete.swift in Sources */,
 				2F48F2141E44BB6200702A4F /* SqliteDatabaseMappable.swift in Sources */,
 				2F48F21F1E44C0A200702A4F /* SqliteDatabaseRowTransform.swift in Sources */,
 				2F48F2081E44B59600702A4F /* SqliteDatabaseInfo.swift in Sources */,

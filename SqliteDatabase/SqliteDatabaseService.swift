@@ -121,3 +121,17 @@ extension SqliteDatabaseService {
         }
     }
 }
+
+// MARK: -
+// MARK: Deletions
+// MARK: -
+
+extension SqliteDatabaseService {
+    public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: (Bool) -> Void) {
+        
+    }
+    
+    public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> Bool {
+        return false
+    }
+}

@@ -1,0 +1,19 @@
+//
+//  SqliteDatabaseDelete.swift
+//  SqliteDatabase
+//
+//  Created by Domagoj Kulundzic on 16/03/2017.
+//  Copyright © 2017 Farmeron. All rights reserved.
+//
+
+import Foundation
+
+public class SqliteDatabaseDelete<M: SqliteDatabaseMappable> {
+    public let tableName: String
+    public let whereClause: String
+    
+    public init(whereClause: String) {
+        self.tableName = M.tableName
+        self.whereClause = whereClause
+    }
+}
