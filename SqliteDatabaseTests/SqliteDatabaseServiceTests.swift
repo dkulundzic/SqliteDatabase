@@ -29,7 +29,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
         let service = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         // Act
-        service.executeQuery(query: query) { (rows) in
+        service.execute(query: query) { (rows) in
             let todos = rows.flatMap(
                 Todo.init
             )
@@ -57,7 +57,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
         let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let service = SqliteDatabaseService(databaseInfo: databaseInfo)
         
-        service.executeQuery(query: query, transform: transform) { (todos) in
+        service.execute(query: query, transform: transform) { (todos) in
             guard let firstTodo = todos.first else {
                 XCTAssert(true)
                 
@@ -67,7 +67,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
             XCTAssert(firstTodo.description == "Test1" && firstTodo.completed == true, "Incorrect Todo retrieved.")
         }
         
-        service.executeQuery(query: query) { (rows) in
+        service.execute(query: query) { (rows) in
             let todos = rows.flatMap(
                 Todo.init
             )

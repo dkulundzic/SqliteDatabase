@@ -99,10 +99,8 @@ public class SqliteDatabaseService {
 // MARK: Querying
 // MARK: -
 
-
 extension SqliteDatabaseService {
-    
-    public func executeQuery<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
+    public func execute<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
         databaseQueue.inTransaction { (database, rollback) in
             guard let database = database else {
                 return
@@ -118,7 +116,7 @@ extension SqliteDatabaseService {
         }
     }
     
-    public func executeQuery<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R) -> Void) {
+    public func execute<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R) -> Void) {
         databaseQueue.inTransaction { (database, rollback) in
             guard let database = database else {
                 return
@@ -137,5 +135,4 @@ extension SqliteDatabaseService {
             }
         }
     }
-    
 }

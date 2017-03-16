@@ -9,8 +9,8 @@
 import Foundation
 
 public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
-    let tableName: String
-    let columns: [String]
+    public let tableName: String
+    public let columns: [String]
     
     public init() {
         self.tableName = M.tableName
