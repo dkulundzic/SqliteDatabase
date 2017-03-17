@@ -170,23 +170,8 @@ extension SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    private func insertionSqlStatement<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> String {
-        assert(insert.columns.count > 0)
-        
-        let operationString = insert.shouldReplace ? "INSERT OR REPLACE": "INSERT"
-        let columnsString = insert.columns.joined(separator: ",")
-        let columnPlaceholders = insert.columns.map { _ in "?" }.joined(separator: ",")
-        let sqlStatement = "\(operationString) INTO \(insert.tableName) (\(columnsString)) VALUES (\(columnPlaceholders));"
-        
-        if isLogging {
-            print("Insertion: " + sqlStatement)
-        }
-        
-        return sqlStatement
-    }
-    
     private func _execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
-        let sqlStatement = insertionSqlStatement(insert: insert)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forInsert: insert)
         var success = false
         
         executeInTransaction { (database, rollback) in

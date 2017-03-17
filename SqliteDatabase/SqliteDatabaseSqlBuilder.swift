@@ -59,7 +59,21 @@ public class SqliteDatabaseSqlBuilder {
     // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forInsert insert: SqliteDatabaseInsert<M>) -> String {
-        return ""
+        // Ensure the columns have been set.
+        assert(insert.columns.count > 0)
+        
+        // Ensure that the values have been correctly (count-wise) mapped to the
+        // columns.
+        assert(insert.columns.count == insert.values.count)
+        
+        let operationString = insert.shouldReplace ? "INSERT OR REPLACE": "INSERT"
+        let columnsString = insert.columns.joined(separator: ",")
+        let columnPlaceholders = insert.columns.map { _ in "?" }.joined(separator: ",")
+        let sqlStatement = "\(operationString) INTO \(insert.tableName) (\(columnsString)) VALUES (\(columnPlaceholders));"
+        
+        self.sqlStatement = sqlStatement
+        
+        return sqlStatement
     }
     
     // MARK: -
