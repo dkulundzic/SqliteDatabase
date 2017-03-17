@@ -140,7 +140,7 @@ extension SqliteDatabaseService {
         let sqlStatement = "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);".trimmingCharacters(in: .whitespacesAndNewlines)
         
         if isLogging {
-            print("Insertion: " + sqlStatement)
+            print("Deletion: " + sqlStatement)
         }
         
         return sqlStatement
@@ -178,7 +178,7 @@ extension SqliteDatabaseService {
         let operationString = insert.shouldReplace ? "INSERT OR REPLACE": "INSERT"
         let columnsString = insert.columns.joined(separator: ",")
         let columnPlaceholders = insert.columns.map { _ in "?" }.joined(separator: ",")
-        let sqlStatement = "\(operationString) INTO \(insert.tableName) \(columnsString) VALUES (\(columnPlaceholders))"
+        let sqlStatement = "\(operationString) INTO \(insert.tableName) (\(columnsString)) VALUES (\(columnPlaceholders));"
         
         if isLogging {
             print("Insertion: " + sqlStatement)
@@ -214,4 +214,56 @@ extension SqliteDatabaseService {
     public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
         return _execute(insert: insert)
     }
+}
+
+// MARK: -
+// MARK: Update
+// MARK: -
+
+extension SqliteDatabaseService {
+    private func updateSqlStatement<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> String {
+        assert(update.columns.count > 0)
+        assert(update.columns.count == update.values.count)
+        
+        let updateString = update.columns.map { (column) -> String in
+            return "\(column) = ?"
+        }.joined(separator: ", ")
+        
+        let sqlStatement = "UPDATE \(update.tableName) SET \(updateString) WHERE \(update.whereClause);"
+        
+        if isLogging {
+            print("Update: " + sqlStatement)
+        }
+        
+        return sqlStatement
+    }
+    
+    private func _execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> Bool {
+        let sqlStatement = updateSqlStatement(update: update)
+        var success = false
+        
+        executeInTransaction { (database, rollback) in
+            do {
+                try database.executeUpdate(sqlStatement, values: update.values)
+                success = true
+            } catch {
+                if self.isLogging {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        return success
+    }
+    
+    public func execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>, completion: @escaping (Bool) -> Void) {
+        let success = _execute(update: update)
+        
+        completion(success)
+    }
+    
+    public func execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> Bool {
+        return _execute(update: update)
+    }
+    
 }
