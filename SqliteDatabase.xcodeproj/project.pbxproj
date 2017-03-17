@@ -148,11 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				2F48F20A1E44B59F00702A4F /* SqliteDatabaseInfoTests.swift */,
-				2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */,
-				4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */,
-				4894CD831E7BDFDD00F6DD97 /* SqliteDatabaseServiceTests_Insertion.swift */,
-				4894CD871E7BE34A00F6DD97 /* SqliteDatabaseServiceTests_Update.swift */,
-				4894CD8B1E7BEA9A00F6DD97 /* SqliteDatabaseSqlBuilderTests.swift */,
+				4894CD8F1E7BEF9900F6DD97 /* SqliteDatabaseSqlBuilderTests */,
+				4894CD8E1E7BEF8900F6DD97 /* SqliteDatabaseServiceTests */,
 			);
 			name = "Unit tests";
 			sourceTree = "<group>";
@@ -191,6 +188,25 @@
 				4894CD851E7BE33D00F6DD97 /* SqliteDatabaseUpdate.swift */,
 			);
 			name = Operations;
+			sourceTree = "<group>";
+		};
+		4894CD8E1E7BEF8900F6DD97 /* SqliteDatabaseServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F2281E44CA1800702A4F /* SqliteDatabaseServiceTests_Querying.swift */,
+				4894CD7F1E7A8C3E00F6DD97 /* SqliteDatabaseServiceTests_Deletion.swift */,
+				4894CD831E7BDFDD00F6DD97 /* SqliteDatabaseServiceTests_Insertion.swift */,
+				4894CD871E7BE34A00F6DD97 /* SqliteDatabaseServiceTests_Update.swift */,
+			);
+			name = SqliteDatabaseServiceTests;
+			sourceTree = "<group>";
+		};
+		4894CD8F1E7BEF9900F6DD97 /* SqliteDatabaseSqlBuilderTests */ = {
+			isa = PBXGroup;
+			children = (
+				4894CD8B1E7BEA9A00F6DD97 /* SqliteDatabaseSqlBuilderTests.swift */,
+			);
+			name = SqliteDatabaseSqlBuilderTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

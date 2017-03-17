@@ -25,7 +25,7 @@ class SqliteDatabaseServiceTests_Deletion: XCTestCase {
         let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
-        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed == 1")
+        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed = 1")
         let success = databaseService.execute(delete: deletion)
         
         XCTAssert(!success, "The deletion should fail.")
@@ -35,7 +35,7 @@ class SqliteDatabaseServiceTests_Deletion: XCTestCase {
         let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
-        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed == 1")
+        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed = 1")
         databaseService.execute(delete: deletion) { (success) in
             XCTAssert(!success, "The deletion should fail.")
         }

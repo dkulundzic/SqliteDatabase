@@ -31,6 +31,12 @@ public class SqliteDatabaseSqlBuilder {
             sqlStatement += " WHERE \(whereClause)"
         }
         
+        if let limit = query.limit {
+            sqlStatement += " LIMIT \(limit)"
+        }
+        
+        sqlStatement += ";"
+        
         self.sqlStatement = sqlStatement
         
         return sqlStatement

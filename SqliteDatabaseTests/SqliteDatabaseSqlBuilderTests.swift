@@ -21,18 +21,34 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
         super.tearDown()
     }
     
-    func test_QuerySqlStatementCreationWithoutWhereClause() {
+    func test_QuerySqlStatementCreation() {
         let query = SqliteDatabaseQuery<Todo>()
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
                 
-        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo".lowercased(), "The created sql QUERY statement is incorrect.")
+        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo;".lowercased(), "The created sql QUERY statement is incorrect.")
     }
     
     func test_QuerySqlStatementCreationWithWhereClause() {
-        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed == 1")
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1")
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
         
-        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo WHERE Completed == 1".lowercased(), "The created QUERY sql statement is incorrect.")
+        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo WHERE Completed = 1;".lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithLimitClause() {
+        let limit = 5
+        let query = SqliteDatabaseQuery<Todo>(limit: limit)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo LIMIT \(limit);".lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithWhereAndLimitClause() {
+        let limit = 3
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", limit: limit)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo WHERE Completed = 1 LIMIT \(limit);".lowercased(), "The created QUERY sql statement is incorrect.")
     }
     
 }

@@ -52,7 +52,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
     }
     
     func test_ExecuteQueryWithWhereClause() {
-        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed == 1")
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1")
         
         let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let service = SqliteDatabaseService(databaseInfo: databaseInfo)
