@@ -59,10 +59,8 @@ public class SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
-        
-        let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "?"
-        let sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
+    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {        
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
         
         if self.isLogging {
             print(sqlStatement)

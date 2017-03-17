@@ -50,5 +50,19 @@ class SqliteDatabaseServiceTests: XCTestCase {
             XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
         }
     }
+    
+    func test_ExecuteQueryWithWhereClause() {
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed == 1")
+        
+        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+        let service = SqliteDatabaseService(databaseInfo: databaseInfo)
+        
+        service.execute(query: query) { (rows) in
+            let todos = rows.flatMap(
+                Todo.init
+            )
+            XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
+        }
+    }
 
 }

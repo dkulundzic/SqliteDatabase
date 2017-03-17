@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SqliteDatabase
 
 public struct Todo {
     public let description: String

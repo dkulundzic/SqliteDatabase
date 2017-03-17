@@ -11,9 +11,11 @@ import Foundation
 public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
     public let tableName: String
     public let columns: [String]
+    public let whereClause: String?
     
-    public init() {
+    public init(whereClause: String? = nil) {
         self.tableName = M.tableName
         self.columns = M.columns
+        self.whereClause = whereClause
     }
 }
