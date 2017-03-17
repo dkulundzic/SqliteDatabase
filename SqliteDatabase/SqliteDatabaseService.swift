@@ -204,30 +204,15 @@ extension SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    private func updateSqlStatement<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> String {
-        assert(update.columns.count > 0)
-        assert(update.columns.count == update.values.count)
-        
-        let updateString = update.columns.map { (column) -> String in
-            return "\(column) = ?"
-        }.joined(separator: ", ")
-        
-        let sqlStatement = "UPDATE \(update.tableName) SET \(updateString) WHERE \(update.whereClause);"
-        
-        if isLogging {
-            print("Update: " + sqlStatement)
-        }
-        
-        return sqlStatement
-    }
-    
     private func _execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> Bool {
-        let sqlStatement = updateSqlStatement(update: update)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forUpdate: update)
         var success = false
         
+        let values = update.columnValuePairs.map { $0.value }
+        
         executeInTransaction { (database, rollback) in
-            do {
-                try database.executeUpdate(sqlStatement, values: update.values)
+            do {                
+                try database.executeUpdate(sqlStatement, values: values)
                 success = true
             } catch {
                 if self.isLogging {

@@ -38,11 +38,11 @@ extension Todo: SqliteDatabaseMappable {
         self.completed = completed
     }
     
-    public func values() -> [AnyObject?] {
-        var values = [AnyObject?]()
+    public func values() -> [Any?] {
+        var values = [Any?]()
         
-        values.append(description as AnyObject?)
-        values.append(completed as AnyObject?)
+        values.append(description as Any?)
+        values.append(completed as Any?)
         
         return values
     }

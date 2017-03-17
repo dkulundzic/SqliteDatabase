@@ -81,7 +81,18 @@ public class SqliteDatabaseSqlBuilder {
     // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forUpdate update: SqliteDatabaseUpdate<M>) -> String {
-        return ""
+        // Ensure the columns have been set.
+        assert(update.columnValuePairs.count > 0)
+        
+        let updateString = update.columnValuePairs.map { (columnValuePair) -> String in
+            return "\(columnValuePair.column) = ?"
+            }.joined(separator: ", ")
+        
+        let sqlStatement = "UPDATE \(update.tableName) SET \(updateString) WHERE \(update.whereClause);"        
+        self.sqlStatement = sqlStatement
+        
+        return sqlStatement
+
     }
     
     // MARK: -

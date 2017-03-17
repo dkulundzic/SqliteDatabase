@@ -11,7 +11,7 @@ import Foundation
 public class SqliteDatabaseInsert<M: SqliteDatabaseMappable> {
     public let tableName: String
     public let columns: [String]
-    public let values: [AnyObject?]
+    public let values: [Any?]
     public let shouldReplace: Bool
     
     public init(mappable: M, shouldReplace: Bool = false) {

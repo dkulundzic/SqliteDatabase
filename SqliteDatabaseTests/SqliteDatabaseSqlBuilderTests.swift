@@ -253,6 +253,19 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
     // MARK: Update tests
     // MARK: -
     
+    func test_UpdateSqlStatementCreation() {
+        let updateColumnValuePairs = [
+            SqliteDatabaseUpdateColumnValuePair(column: "Completed", value: true),
+            SqliteDatabaseUpdateColumnValuePair(column: "Description", value: "Feed the dog.")
+        ]
+        
+        let update = SqliteDatabaseUpdate<Todo>(columnValuePairs: updateColumnValuePairs, whereClause: "Id = 1")
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forUpdate: update)
+        let expectedStatement = "UPDATE Todo SET Completed = ?, Description = ? WHERE Id = 1;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedStatement.lowercased(), "The created sql UPDATE statement is invalid.")
+    }
+    
     // MARK: -
     // MARK: Delete tests
     // MARK: -
