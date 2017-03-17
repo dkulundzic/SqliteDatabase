@@ -12,12 +12,12 @@ public class SqliteDatabaseInsert<M: SqliteDatabaseMappable> {
     public let tableName: String
     public let columns: [String]
     public let values: [AnyObject?]
-    public let whereClause: String
+    public let shouldReplace: Bool
     
-    public init(mappable: SqliteDatabaseMappable, whereClause: String) {
+    public init(mappable: SqliteDatabaseMappable, shouldReplace: Bool = false) {
         self.tableName = M.tableName
         self.columns = M.columns
         self.values = mappable.values
-        self.whereClause = whereClause
+        self.shouldReplace = shouldReplace
     }
 }

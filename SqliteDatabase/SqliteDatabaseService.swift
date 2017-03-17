@@ -52,8 +52,14 @@ public class SqliteDatabaseService {
             operation(database, rollback)
         }
     }
-    
-    fileprivate func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
+}
+
+// MARK: -
+// MARK: Querying
+// MARK: -
+
+extension SqliteDatabaseService {
+    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
         
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "?"
         let sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
@@ -89,13 +95,6 @@ public class SqliteDatabaseService {
         }
     }
     
-}
-
-// MARK: -
-// MARK: Querying
-// MARK: -
-
-extension SqliteDatabaseService {
     public func execute<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
         
         let operation = { (database: FMDatabase, rollback: UnsafeMutablePointer<ObjCBool>) in
@@ -133,13 +132,18 @@ extension SqliteDatabaseService {
 }
 
 // MARK: -
-// MARK: Deletions
+// MARK: Deletion
 // MARK: -
 
 extension SqliteDatabaseService {
-    
     private func deletionSqlStatement<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> String {
-        return "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);".trimmingCharacters(in: .whitespacesAndNewlines)
+        let sqlStatement = "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);".trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if isLogging {
+            print("Insertion: " + sqlStatement)
+        }
+        
+        return sqlStatement
     }
     
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: @escaping (Bool) -> Void) {
@@ -160,5 +164,54 @@ extension SqliteDatabaseService {
         }
         
         return success
+    }
+}
+
+// MARK: -
+// MARK: Insertion
+// MARK: -
+
+extension SqliteDatabaseService {
+    private func insertionSqlStatement<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> String {
+        assert(insert.columns.count > 0)
+        
+        let operationString = insert.shouldReplace ? "INSERT OR REPLACE": "INSERT"
+        let columnsString = insert.columns.joined(separator: ",")
+        let columnPlaceholders = insert.columns.map { _ in "?" }.joined(separator: ",")
+        let sqlStatement = "\(operationString) INTO \(insert.tableName) \(columnsString) VALUES (\(columnPlaceholders))"
+        
+        if isLogging {
+            print("Insertion: " + sqlStatement)
+        }
+        
+        return sqlStatement
+    }
+    
+    private func _execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
+        let sqlStatement = insertionSqlStatement(insert: insert)
+        var success = false
+        
+        executeInTransaction { (database, rollback) in
+            do {
+                try database.executeUpdate(sqlStatement, values: insert.values)
+                success = true
+            } catch {
+                if self.isLogging {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        return success
+    }
+    
+    public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>, completion: @escaping (Bool) -> Void) {
+        let success = _execute(insert: insert)
+        
+        completion(success)
+    }
+    
+    public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
+        return _execute(insert: insert)
     }
 }
