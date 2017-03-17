@@ -44,21 +44,6 @@ public class SqliteDatabaseService {
     
     fileprivate func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {
         
-        var rows = [SqliteDatabaseRow]()
-        rows.append(
-            ["Description": "Test1", "Completed": true]
-        )
-        rows.append(
-            ["Description": "Test2", "Completed": true]
-        )
-        rows.append(
-            ["Description": "Test3", "Completed": false]
-        )
-        
-        completion(rows)
-        
-        return
-        
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "?"
         let sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
         

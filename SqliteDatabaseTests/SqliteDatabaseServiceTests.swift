@@ -21,8 +21,6 @@ class SqliteDatabaseServiceTests: XCTestCase {
     
     func test_ExecuteQueryWithoutTransform() {
         // Arrange
-        let testExpectation = expectation(description: "ExecuteQueryWithoutTransform")
-        
         let query = SqliteDatabaseQuery<Todo>()
         
         let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
@@ -35,20 +33,11 @@ class SqliteDatabaseServiceTests: XCTestCase {
             )
             
             // Assert
-            XCTAssert(todos.count == 3, "There should be three Todos returned.")
-            testExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0) { (error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
+            XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
         }
     }
     
     func test_ExecuteQueryWithTransform() {
-        let testExpectation = expectation(description: "ExecuteQueryWithTransform")
-        
         let query = SqliteDatabaseQuery<Todo>()
         let transform = SqliteDatabaseRowTransform<[Todo]> { (rows) -> [Todo] in
             return rows.flatMap({ Todo(row: $0) })
@@ -58,28 +47,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
         let service = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         service.execute(query: query, transform: transform) { (todos) in
-            guard let firstTodo = todos.first else {
-                XCTAssert(true)
-                
-                return
-            }
-            
-            XCTAssert(firstTodo.description == "Test1" && firstTodo.completed == true, "Incorrect Todo retrieved.")
-        }
-        
-        service.execute(query: query) { (rows) in
-            let todos = rows.flatMap(
-                Todo.init
-            )
-            
-            XCTAssert(todos.count == 3, "There should be three Todos returned.")
-            testExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 1.0) { (error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
+            XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
         }
     }
 
