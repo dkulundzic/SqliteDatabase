@@ -11,16 +11,6 @@ import SqliteDatabase
 
 class SqliteDatabaseSqlBuilderTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func test_QuerySqlStatementCreation() {
         let query = SqliteDatabaseQuery<Todo>()
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
@@ -43,20 +33,6 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
         XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo LIMIT \(limit);".lowercased(), "The created QUERY sql statement is incorrect.")
     }
     
-    func test_QuerySqlStatementCreationWithInnerJoins() {
-        let innerJoins = [
-            SqliteDatabaseQueryInnerJoin(tableName: "Users", joinPredicate: "t.UserId = u.Id"),
-            SqliteDatabaseQueryInnerJoin(tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
-        ]
-        
-        let query = SqliteDatabaseQuery<Todo>(innerJoins: innerJoins)
-        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
-        
-        let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId;"
-        
-        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
-    }
-    
     func test_QuerySqlStatementCreationWithWhereAndLimitClause() {
         let limit = 3
         let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", limit: limit)
@@ -65,13 +41,27 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
         XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo WHERE Completed = 1 LIMIT \(limit);".lowercased(), "The created QUERY sql statement is incorrect.")
     }
     
-    func test_QuerySqlStatementCreationWithInnerJoinsAndWhereClause() {
+    func test_QuerySqlStatementCreationWithInnerJoins() {
         let innerJoins = [
-            SqliteDatabaseQueryInnerJoin(tableName: "Users", joinPredicate: "t.UserId = u.Id"),
-            SqliteDatabaseQueryInnerJoin(tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
         ]
         
-        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", innerJoins: innerJoins)
+        let query = SqliteDatabaseQuery<Todo>(joins: innerJoins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithInnerJoinsAndWhereClause() {
+        let innerJoins = [
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", joins: innerJoins)
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
         
         let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId WHERE Completed = 1;"
@@ -82,14 +72,151 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
     func test_QuerySqlStatementCreationWithInnerJoinsAndLimitClause() {
         let limit = 5
         let innerJoins = [
-            SqliteDatabaseQueryInnerJoin(tableName: "Users", joinPredicate: "t.UserId = u.Id"),
-            SqliteDatabaseQueryInnerJoin(tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
         ]
         
-        let query = SqliteDatabaseQuery<Todo>(limit: limit, innerJoins: innerJoins)
+        let query = SqliteDatabaseQuery<Todo>(limit: limit, joins: innerJoins)
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
         
         let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId LIMIT \(limit);"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithInnerJoinsAndBothWhereAndLimitClause() {
+        let limit = 5
+        let innerJoins = [
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", limit: limit, joins: innerJoins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId WHERE Completed = 1 LIMIT \(limit);"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithLeftJoins() {
+        let leftJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let query = SqliteDatabaseQuery<Todo>(joins: leftJoins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithLeftJoinsAndWhereClause() {
+        let leftJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", joins: leftJoins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId WHERE Completed = 1;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithLeftJoinsAndLimitClause() {
+        let limit = 5
+        let leftJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let query = SqliteDatabaseQuery<Todo>(limit: limit, joins: leftJoins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId LIMIT \(limit);"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithLeftJoinsAndBothWhereAndLimitClause() {
+        let limit = 5
+        let innerJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", limit: limit, joins: innerJoins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId WHERE Completed = 1 LIMIT \(limit);"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithInnerAndLeftJoins() {
+        let innerJoins = [
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let leftJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let joins = innerJoins + leftJoins
+        
+        let query = SqliteDatabaseQuery<Todo>(joins: joins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithInnerAndLeftJoinsAndWhereClause() {
+        let innerJoins = [
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let leftJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let joins = innerJoins + leftJoins
+        
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", joins: joins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId WHERE Completed = 1;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
+    }
+    
+    func test_QuerySqlStatementCreationWithInnerAndLeftJoinsAndWhereClauseAndLimitClause() {
+        let limit = 5
+        let innerJoins = [
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .inner, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let leftJoins = [
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Users", joinPredicate: "t.UserId = u.Id"),
+            SqliteDatabaseQueryJoin(joinType: .left, tableName: "Tags", joinPredicate: "t.Id = tgs.TodoId")
+        ]
+        
+        let joins = innerJoins + leftJoins
+        
+        let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", limit: limit, joins: joins)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        let expectedSqlStatement = "SELECT Description,Completed FROM Todo INNER JOIN Users ON t.UserId = u.Id INNER JOIN Tags ON t.Id = tgs.TodoId LEFT JOIN Users ON t.UserId = u.Id LEFT JOIN Tags ON t.Id = tgs.TodoId WHERE Completed = 1 LIMIT \(5);"
         
         XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
     }

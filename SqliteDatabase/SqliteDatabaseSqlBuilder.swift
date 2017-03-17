@@ -27,12 +27,12 @@ public class SqliteDatabaseSqlBuilder {
         
         var sqlStatement = "SELECT \(columnsString) FROM \(query.tableName)"
         
-        if let innerJoins = query.innerJoins {
-            let innerJoinString = innerJoins.map({ (innerJoin) -> String in
-                return "INNER JOIN \(innerJoin.tableName) ON \(innerJoin.joinPredicate)"
+        if let joins = query.joins {
+            let joinString = joins.map({ (join) -> String in
+                return "\(join.joinType.rawValue.uppercased()) JOIN \(join.tableName) ON \(join.joinPredicate)"
             }).joined(separator: " ")
             
-            sqlStatement += " \(innerJoinString)"
+            sqlStatement += " \(joinString)"
         }
         
         if let whereClause = query.whereClause {

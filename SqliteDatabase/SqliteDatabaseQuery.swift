@@ -8,11 +8,18 @@
 
 import Foundation
 
-public struct SqliteDatabaseQueryInnerJoin {
+public struct SqliteDatabaseQueryJoin {
+    public enum SqliteDatabaseQueryJoinType: String {
+        case inner = "inner"
+        case left = "left"
+    }
+    
     public let tableName: String
     public let joinPredicate: String
+    public let joinType: SqliteDatabaseQueryJoinType
     
-    public init(tableName: String, joinPredicate: String) {
+    public init(joinType: SqliteDatabaseQueryJoinType, tableName: String, joinPredicate: String) {
+        self.joinType = joinType
         self.tableName = tableName
         self.joinPredicate = joinPredicate
     }
@@ -24,13 +31,13 @@ public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
     public let columns: [String]
     public let whereClause: String?
     public let limit: Int?
-    public let innerJoins: [SqliteDatabaseQueryInnerJoin]?
+    public let joins: [SqliteDatabaseQueryJoin]?
     
-    public init(whereClause: String? = nil, limit: Int? = nil, innerJoins: [SqliteDatabaseQueryInnerJoin]? = nil) {
+    public init(whereClause: String? = nil, limit: Int? = nil, joins: [SqliteDatabaseQueryJoin]? = nil) {
         self.tableName = M.tableName
         self.columns = M.columns
         self.whereClause = whereClause
         self.limit = limit
-        self.innerJoins = innerJoins
+        self.joins = joins
     }
 }
