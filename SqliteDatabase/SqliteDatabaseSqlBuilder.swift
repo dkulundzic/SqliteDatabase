@@ -22,6 +22,10 @@ public class SqliteDatabaseSqlBuilder {
     
     public init() { }
     
+    // MARK: -
+    // MARK: Query statement building
+    // MARK: -
+    
     public func build<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>) -> String {
         let columnsString = query.columns.count > 0 ? query.columns.joined(separator: ","): "?"
         
@@ -50,13 +54,25 @@ public class SqliteDatabaseSqlBuilder {
         return sqlStatement
     }
     
+    // MARK: -
+    // MARK: Insert statement building
+    // MARK: -
+    
     public func build<M: SqliteDatabaseMappable>(forInsert insert: SqliteDatabaseInsert<M>) -> String {
         return ""
     }
     
+    // MARK: -
+    // MARK: Update statement building
+    // MARK: -
+    
     public func build<M: SqliteDatabaseMappable>(forUpdate update: SqliteDatabaseUpdate<M>) -> String {
         return ""
     }
+    
+    // MARK: -
+    // MARK: Delete statement building
+    // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forDelete delete: SqliteDatabaseDelete<M>) -> String {
         return ""

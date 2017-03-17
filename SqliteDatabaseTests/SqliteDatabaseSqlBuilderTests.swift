@@ -11,6 +11,10 @@ import SqliteDatabase
 
 class SqliteDatabaseSqlBuilderTests: XCTestCase {
     
+    // MARK: - 
+    // MARK: Query tests
+    // MARK: -
+    
     func test_QuerySqlStatementCreation() {
         let query = SqliteDatabaseQuery<Todo>()
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
@@ -220,4 +224,16 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
         
         XCTAssert(sqlStatement.lowercased() == expectedSqlStatement.lowercased(), "The created QUERY sql statement is incorrect.")
     }
+    
+    // MARK: -
+    // MARK: Insert tests
+    // MARK: -
+    
+    // MARK: -
+    // MARK: Update tests
+    // MARK: -
+    
+    // MARK: -
+    // MARK: Delete tests
+    // MARK: -
 }
