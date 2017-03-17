@@ -14,10 +14,10 @@ public class SqliteDatabaseInsert<M: SqliteDatabaseMappable> {
     public let values: [AnyObject?]
     public let shouldReplace: Bool
     
-    public init(mappable: SqliteDatabaseMappable, shouldReplace: Bool = false) {
+    public init(mappable: M, shouldReplace: Bool = false) {
         self.tableName = M.tableName
         self.columns = M.columns
-        self.values = mappable.values
+        self.values = mappable.values()
         self.shouldReplace = shouldReplace
     }
 }

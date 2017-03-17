@@ -8,13 +8,23 @@
 
 import Foundation
 
-public struct Todo: SqliteDatabaseMappable {
+public struct Todo {
     public let description: String
     public let completed: Bool
     
     public init(description: String, completed: Bool = false) {
         self.description = description
         self.completed = completed
+    }
+}
+
+extension Todo: SqliteDatabaseMappable {
+    
+    public static var columns: [String] {
+        return [
+            "Description",
+            "Completed"
+        ]
     }
     
     public init?(row: SqliteDatabaseRow) {
@@ -26,4 +36,14 @@ public struct Todo: SqliteDatabaseMappable {
         self.description = description
         self.completed = completed
     }
+    
+    public func values() -> [AnyObject?] {
+        var values = [AnyObject?]()
+        
+        values.append(description as AnyObject?)
+        values.append(completed as AnyObject?)
+        
+        return values
+    }
+    
 }
