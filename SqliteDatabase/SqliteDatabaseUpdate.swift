@@ -3,7 +3,7 @@
 //  SqliteDatabase
 //
 //  Created by Domagoj Kulundzic on 17/03/2017.
-//  Copyright © 2017 Farmeron. All rights reserved.
+//  Copyright © 2017 InBetweeners. All rights reserved.
 //
 
 import Foundation
