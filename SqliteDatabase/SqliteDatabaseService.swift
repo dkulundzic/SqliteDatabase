@@ -39,6 +39,24 @@ public class SqliteDatabaseService {
     }
     
     // MARK: -
+    // MARK: API - Custom SQL
+    // MARK: -
+    
+    public func execute(_ sql: String) -> Bool {
+        var success = false
+        
+        databaseQueue.inDatabase { (database) in
+            guard let database = database else {
+                return
+            }
+            
+            success = database.executeStatements(sql)
+        }
+        
+        return success
+    }
+    
+    // MARK: -
     // MARK: Private methods
     // MARK: -
     
@@ -55,7 +73,7 @@ public class SqliteDatabaseService {
 }
 
 // MARK: -
-// MARK: Querying
+// MARK: API - Querying
 // MARK: -
 
 extension SqliteDatabaseService {
@@ -130,7 +148,7 @@ extension SqliteDatabaseService {
 }
 
 // MARK: -
-// MARK: Deletion
+// MARK: API - Deletion
 // MARK: -
 
 extension SqliteDatabaseService {
@@ -156,7 +174,7 @@ extension SqliteDatabaseService {
 }
 
 // MARK: -
-// MARK: Insertion
+// MARK: API - Insertion
 // MARK: -
 
 extension SqliteDatabaseService {
@@ -190,7 +208,7 @@ extension SqliteDatabaseService {
 }
 
 // MARK: -
-// MARK: Update
+// MARK: API - Update
 // MARK: -
 
 extension SqliteDatabaseService {
