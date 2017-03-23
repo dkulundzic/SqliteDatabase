@@ -11,6 +11,8 @@ import SqliteDatabase
 
 class SqliteDatabaseServiceTests_Insertion: XCTestCase {
     
+    let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    
     override func setUp() {
         super.setUp()
     }
@@ -20,7 +22,6 @@ class SqliteDatabaseServiceTests_Insertion: XCTestCase {
     }
     
     func test_ExecuteInsertionSync() {
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         let todo = Todo(description: "Feed the cat")
@@ -28,11 +29,10 @@ class SqliteDatabaseServiceTests_Insertion: XCTestCase {
         let insertion = SqliteDatabaseInsert<Todo>(mappable: todo)
         let success = databaseService.execute(insert: insertion)
         
-        XCTAssert(!success, "The insertion should fail.")
+        XCTAssert(success, "The insertion should succeed.")
     }
     
     func test_ExecuteInsertionAsync() {
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         var _success = false
@@ -43,7 +43,7 @@ class SqliteDatabaseServiceTests_Insertion: XCTestCase {
             _success = success
         }
         
-        XCTAssert(!_success, "The insertion should fail.")
+        XCTAssert(_success, "The insertion should succeed.")
     }
     
 }

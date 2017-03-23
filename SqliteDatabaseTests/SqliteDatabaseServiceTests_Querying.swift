@@ -11,6 +11,8 @@ import SqliteDatabase
 
 class SqliteDatabaseServiceTests: XCTestCase {
     
+    let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    
     override func setUp() {
         super.setUp()
     }
@@ -22,8 +24,6 @@ class SqliteDatabaseServiceTests: XCTestCase {
     func test_ExecuteQueryWithoutTransform() {
         // Arrange
         let query = SqliteDatabaseQuery<Todo>()
-        
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let service = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         // Act
@@ -33,7 +33,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
             )
             
             // Assert
-            XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
+            XCTAssert(todos.count > 0, "There should be todos returned.")
         }
     }
     
@@ -43,11 +43,10 @@ class SqliteDatabaseServiceTests: XCTestCase {
             return rows.flatMap({ Todo(row: $0) })
         }
         
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let service = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         service.execute(query: query, transform: transform) { (todos) in
-            XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
+            XCTAssert(todos.count > 0, "There shouldn be todos returned.")
         }
     }
     

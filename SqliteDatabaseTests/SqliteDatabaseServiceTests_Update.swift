@@ -11,6 +11,8 @@ import SqliteDatabase
 
 class SqliteDatabaseServiceTests_Update: XCTestCase {
     
+    let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,7 +24,6 @@ class SqliteDatabaseServiceTests_Update: XCTestCase {
     }
     
     func test_ExecuteUpdateSync() {
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         let updateColumnValuePairs = [
@@ -33,11 +34,10 @@ class SqliteDatabaseServiceTests_Update: XCTestCase {
         
         let success = databaseService.execute(update: update)
         
-        XCTAssert(!success, "The update should fail.")
+        XCTAssert(success, "The update should succeed.")
     }
     
     func test_ExecuteUpdateAsync() {
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         var _success = false
@@ -52,7 +52,7 @@ class SqliteDatabaseServiceTests_Update: XCTestCase {
             _success = success
         }
         
-        XCTAssert(!_success, "The update should fail.")
+        XCTAssert(_success, "The update should succeed.")
     }
     
 }

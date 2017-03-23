@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+ The SqliteDatabaseSqlBuilder is a utility class used to simplify SQL statement creation for
+ QUERY, INSERT, UPDATE or DELETE operations.
+ */
 public class SqliteDatabaseSqlBuilder {
     
     var isLogging = true

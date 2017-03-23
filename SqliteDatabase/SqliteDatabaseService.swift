@@ -62,10 +62,6 @@ extension SqliteDatabaseService {
     private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {        
         let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
         
-        if self.isLogging {
-            print(sqlStatement)
-        }
-        
         do {
             let resultSet = try database.executeQuery(sqlStatement, values: [])
             

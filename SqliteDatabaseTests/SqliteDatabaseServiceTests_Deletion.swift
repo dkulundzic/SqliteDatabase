@@ -11,6 +11,8 @@ import SqliteDatabase
 
 class SqliteDatabaseServiceTests_Deletion: XCTestCase {
     
+    let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,22 +24,20 @@ class SqliteDatabaseServiceTests_Deletion: XCTestCase {
     }
     
     func test_ExecuteDeletion_Sync() {
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
-        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed = 1")
+        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed == 1")
         let success = databaseService.execute(delete: deletion)
         
-        XCTAssert(!success, "The deletion should fail.")
+        XCTAssert(success, "The deletion should succeed.")
     }
     
     func test_ExecuteDeletion_Async() {
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
-        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed = 1")
+        let deletion = SqliteDatabaseDelete<Todo>(whereClause: "Completed == 1")
         databaseService.execute(delete: deletion) { (success) in
-            XCTAssert(!success, "The deletion should fail.")
+            XCTAssert(success, "The deletion should succeed.")
         }
     }
 }
