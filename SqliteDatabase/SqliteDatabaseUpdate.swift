@@ -8,16 +8,25 @@
 
 import Foundation
 
+public struct SqliteDatabaseUpdateColumnValuePair {
+    public let column: String
+    public let value: Any?
+    
+    public init(column: String, value: Any?) {
+        self.column = column
+        self.value = value
+    }
+}
+
 public class SqliteDatabaseUpdate<M: SqliteDatabaseMappable> {
+    
     public let tableName: String
-    public let columns: [String]
-    public let values: [AnyObject?]
+    public let columnValuePairs: [SqliteDatabaseUpdateColumnValuePair]
     public let whereClause: String
     
-    public init(mappable: M, whereClause: String) {
+    public init(columnValuePairs: [SqliteDatabaseUpdateColumnValuePair], whereClause: String) {
         self.tableName = M.tableName
-        self.columns = M.columns
-        self.values = mappable.values()
+        self.columnValuePairs = columnValuePairs
         self.whereClause = whereClause
     }
 }

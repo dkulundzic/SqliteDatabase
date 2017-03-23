@@ -12,14 +12,6 @@ public class SqliteDatabaseSqlBuilder {
     
     var isLogging = true
     
-    private(set) var sqlStatement: String? {
-        didSet {
-            if let sqlStatement = sqlStatement, isLogging {
-                print(sqlStatement)
-            }
-        }
-    }
-    
     public init() { }
     
     // MARK: -
@@ -49,7 +41,7 @@ public class SqliteDatabaseSqlBuilder {
         
         sqlStatement += ";"
         
-        self.sqlStatement = sqlStatement
+        log(sqlStatement)
         
         return sqlStatement
     }
@@ -59,7 +51,21 @@ public class SqliteDatabaseSqlBuilder {
     // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forInsert insert: SqliteDatabaseInsert<M>) -> String {
-        return ""
+        // Ensure the columns have been set.
+        assert(insert.columns.count > 0)
+        
+        // Ensure that the values have been correctly (count-wise) mapped to the
+        // columns.
+        assert(insert.columns.count == insert.values.count)
+        
+        let operationString = insert.shouldReplace ? "INSERT OR REPLACE": "INSERT"
+        let columnsString = insert.columns.joined(separator: ",")
+        let columnPlaceholders = insert.columns.map { _ in "?" }.joined(separator: ",")
+        let sqlStatement = "\(operationString) INTO \(insert.tableName) (\(columnsString)) VALUES (\(columnPlaceholders));"
+        
+        log(sqlStatement)
+        
+        return sqlStatement
     }
     
     // MARK: -
@@ -67,7 +73,18 @@ public class SqliteDatabaseSqlBuilder {
     // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forUpdate update: SqliteDatabaseUpdate<M>) -> String {
-        return ""
+        // Ensure the columns have been set.
+        assert(update.columnValuePairs.count > 0)
+        
+        let updateString = update.columnValuePairs.map { (columnValuePair) -> String in
+            return "\(columnValuePair.column) = ?"
+            }.joined(separator: ", ")
+        
+        let sqlStatement = "UPDATE \(update.tableName) SET \(updateString) WHERE \(update.whereClause);"        
+        log(sqlStatement)
+        
+        return sqlStatement
+
     }
     
     // MARK: -
@@ -75,7 +92,19 @@ public class SqliteDatabaseSqlBuilder {
     // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forDelete delete: SqliteDatabaseDelete<M>) -> String {
-        return ""
+        let sqlStatement = "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);"
+        log(sqlStatement)
+        
+        return sqlStatement
     }
     
+    // MARK: -
+    // MARK: Other
+    // MARK: -
+    
+    private func log(_ text: CustomStringConvertible) {
+        if isLogging {
+            print(text)
+        }
+    }
 }

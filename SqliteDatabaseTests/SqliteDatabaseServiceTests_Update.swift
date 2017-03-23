@@ -25,9 +25,12 @@ class SqliteDatabaseServiceTests_Update: XCTestCase {
         let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
-        let todo = Todo(description: "Feed the cat")
+        let updateColumnValuePairs = [
+            SqliteDatabaseUpdateColumnValuePair(column: "Description", value: "Feed the cat")
+        ]
         
-        let update = SqliteDatabaseUpdate<Todo>(mappable: todo, whereClause: "1=1")
+        let update = SqliteDatabaseUpdate<Todo>(columnValuePairs: updateColumnValuePairs, whereClause: "Completed = 0")
+        
         let success = databaseService.execute(update: update)
         
         XCTAssert(!success, "The update should fail.")
@@ -38,8 +41,12 @@ class SqliteDatabaseServiceTests_Update: XCTestCase {
         let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         var _success = false
-        let todo = Todo(description: "Feed the cat")
-        let update = SqliteDatabaseUpdate<Todo>(mappable: todo, whereClause: "1=1")
+        
+        let updateColumnValuePairs = [
+            SqliteDatabaseUpdateColumnValuePair(column: "Description", value: "Feed the cat")
+        ]
+        
+        let update = SqliteDatabaseUpdate<Todo>(columnValuePairs: updateColumnValuePairs, whereClause: "Completed = 0")
         
         databaseService.execute(update: update) { (success) in
             _success = success

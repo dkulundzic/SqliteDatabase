@@ -15,7 +15,7 @@ public protocol SqliteDatabaseMappable {
     static var columns: [String] { get }
     
     init?(row: SqliteDatabaseRow)
-    func values() -> [AnyObject?]
+    func values() -> [Any?]
 }
 
 extension SqliteDatabaseMappable {
@@ -31,7 +31,7 @@ extension SqliteDatabaseMappable {
         return nil
     }
     
-    public func values() -> [AnyObject?] {
+    public func values() -> [Any?] {
         return []
     }
 }
