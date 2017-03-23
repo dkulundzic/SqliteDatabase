@@ -269,4 +269,13 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
     // MARK: -
     // MARK: Delete tests
     // MARK: -
+    
+    func test_DeleteSqlStatementCreation() {
+        let delete = SqliteDatabaseDelete<Todo>(whereClause: "Completed == 0")
+        
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forDelete: delete)
+        let expectedStatement = "DELETE FROM Todo WHERE Completed == 0;"
+        
+        XCTAssert(sqlStatement.lowercased() == expectedStatement.lowercased(), "The created sql DELETE statement is invalid.")
+    }
 }

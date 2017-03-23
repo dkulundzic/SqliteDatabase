@@ -134,18 +134,8 @@ extension SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    private func deletionSqlStatement<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> String {
-        let sqlStatement = "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);".trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if isLogging {
-            print("Deletion: " + sqlStatement)
-        }
-        
-        return sqlStatement
-    }
-    
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: @escaping (Bool) -> Void) {
-        let sqlStatement = deletionSqlStatement(delete: delete)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forDelete: delete)
         
         executeInTransaction { (database, rollback) in
             let success = database.executeStatements(sqlStatement)
@@ -154,7 +144,7 @@ extension SqliteDatabaseService {
     }
     
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> Bool {
-        let sqlStatement = deletionSqlStatement(delete: delete)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forDelete: delete)
         var success = false
         
         executeInTransaction { (database, rollback) in

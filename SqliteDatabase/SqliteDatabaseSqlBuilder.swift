@@ -12,14 +12,6 @@ public class SqliteDatabaseSqlBuilder {
     
     var isLogging = true
     
-    private(set) var sqlStatement: String? {
-        didSet {
-            if let sqlStatement = sqlStatement, isLogging {
-                print(sqlStatement)
-            }
-        }
-    }
-    
     public init() { }
     
     // MARK: -
@@ -49,7 +41,7 @@ public class SqliteDatabaseSqlBuilder {
         
         sqlStatement += ";"
         
-        self.sqlStatement = sqlStatement
+        log(sqlStatement)
         
         return sqlStatement
     }
@@ -71,7 +63,7 @@ public class SqliteDatabaseSqlBuilder {
         let columnPlaceholders = insert.columns.map { _ in "?" }.joined(separator: ",")
         let sqlStatement = "\(operationString) INTO \(insert.tableName) (\(columnsString)) VALUES (\(columnPlaceholders));"
         
-        self.sqlStatement = sqlStatement
+        log(sqlStatement)
         
         return sqlStatement
     }
@@ -89,7 +81,7 @@ public class SqliteDatabaseSqlBuilder {
             }.joined(separator: ", ")
         
         let sqlStatement = "UPDATE \(update.tableName) SET \(updateString) WHERE \(update.whereClause);"        
-        self.sqlStatement = sqlStatement
+        log(sqlStatement)
         
         return sqlStatement
 
@@ -100,7 +92,19 @@ public class SqliteDatabaseSqlBuilder {
     // MARK: -
     
     public func build<M: SqliteDatabaseMappable>(forDelete delete: SqliteDatabaseDelete<M>) -> String {
-        return ""
+        let sqlStatement = "DELETE FROM \(delete.tableName) WHERE \(delete.whereClause);"
+        log(sqlStatement)
+        
+        return sqlStatement
     }
     
+    // MARK: -
+    // MARK: Other
+    // MARK: -
+    
+    private func log(_ text: CustomStringConvertible) {
+        if isLogging {
+            print(text)
+        }
+    }
 }
