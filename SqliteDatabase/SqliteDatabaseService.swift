@@ -10,8 +10,7 @@ import Foundation
 import FMDB
 
 public enum SqliteDatabaseServiceError: Error {
-    case unknown
-    case cannotOpenDatabase
+    case error(String)
 }
 
 public class SqliteDatabaseService {
@@ -59,7 +58,7 @@ public class SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {        
+    private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow], SqliteDatabaseServiceError?) -> Void) throws {
         let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forQuery: query)
         
         do {
@@ -79,45 +78,62 @@ extension SqliteDatabaseService {
                 rows.append(row)
             }
             
-            completion(rows)
+            completion(rows, nil)
         } catch {
             if self.isLogging {
-                print("There was an error executing: \(sqlStatement)")
+                print("There was an error executing: \(sqlStatement) becuase \(error.localizedDescription)")
             }
             
-            throw SqliteDatabaseServiceError.unknown
+            completion([], .error(error.localizedDescription))
         }
     }
     
-    public func execute<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow]) -> Void) {
+    /**
+     Executes a Query against the database (using a SqliteDatabaseQuery instance).
+     
+     - parameter query: A SqliteDatabaseQuery instance.
+     - parameter completion: A closure to be invoked upon operation completion.
+     */
+    public func execute<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([SqliteDatabaseRow], SqliteDatabaseServiceError?) -> Void) {
         
         let operation = { (database: FMDatabase, rollback: UnsafeMutablePointer<ObjCBool>) in
             do {
-                try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
-                    completion(rows)
+                try self.rows(forQuery: query, inDatabase: database, completion: { (rows, error) in
+                    completion(rows, error)
                 })
             } catch {
                 print(error.localizedDescription)
-                completion([])
+                completion([], .error(error.localizedDescription))
             }
         }
         
         executeInTransaction(operation: operation)
     }
-    
-    public func execute<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R) -> Void) {
+    /**
+     Executes a Query against the database (using a SqliteDatabaseQuery instance) with a SqliteDatabaseRowTransform instance
+     to transform the rows retrieved.
+     
+     - parameter query: A SqliteDatabaseQuery instance.
+     - parameter transform: A SqliteDatabaseRowTransform instance specifying the row transformation.
+     - parameter completion: A closure to be invoked upon operation completion.
+     */
+    public func execute<M: SqliteDatabaseMappable, R: Any>(query: SqliteDatabaseQuery<M>, transform: SqliteDatabaseRowTransform<R>, completion: @escaping (R?, SqliteDatabaseServiceError?) -> Void) {
         
         let operation = { (database: FMDatabase, rollback: UnsafeMutablePointer<ObjCBool>) in
             do {
-                try self.rows(forQuery: query, inDatabase: database, completion: { (rows) in
+                try self.rows(forQuery: query, inDatabase: database, completion: { (rows, error) in
+                    guard error == nil else {
+                        completion(nil, .error(error!.localizedDescription))
+                        return
+                    }
+                    
                     let transformedRows = transform.transform(rows: rows)
                     
-                    completion(
-                        transformedRows
-                    )
+                    completion(transformedRows, nil)
                 })
             } catch {
                 print(error.localizedDescription)
+                completion(nil, .error(error.localizedDescription))
             }
         }
         
@@ -130,6 +146,13 @@ extension SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
+    
+    /**
+     Executes a Delete against the database (using a SqliteDatabaseDelete instance).
+     
+     - parameter delete: A SqliteDatabaseDelete instance.
+     - parameter completion: A closure to invoke upon operation completion.
+     */
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: @escaping (Bool) -> Void) {
         let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forDelete: delete)
         
@@ -139,6 +162,13 @@ extension SqliteDatabaseService {
         }
     }
     
+    /**
+     Executes a Delete against the database (using a SqliteDatabaseDelete instance).
+     
+     - parameter delete: A SqliteDatabaseDelete instance.
+     
+     - returns: True if the operation was successful, otherwise returns false.
+     */
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> Bool {
         let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forDelete: delete)
         var success = false
@@ -174,12 +204,25 @@ extension SqliteDatabaseService {
         return success
     }
     
+    /**
+     Executes a Insert against the database (using a SqliteDatabaseInsert instance).
+     
+     - parameter insert: A SqliteDatabaseInsert instance.
+     - parameter completion: A closure to invoke upon operation completion.
+     */
     public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>, completion: @escaping (Bool) -> Void) {
         let success = _execute(insert: insert)
         
         completion(success)
     }
     
+    /**
+     Executes a Insert against the database (using a SqliteDatabaseInsert instance).
+     
+     - parameter insert: A SqliteDatabaseInsert instance.
+     
+     - returns: True if the operation was successful, otherwise returns false.
+     */
     public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
         return _execute(insert: insert)
     }
@@ -210,12 +253,25 @@ extension SqliteDatabaseService {
         return success
     }
     
+    /**
+     Executes a Update against the database (using a SqliteDatabaseUpdate instance).
+     
+     - parameter update: A SqliteDatabaseUpdate instance.
+     - parameter completion: A closure to invoke upon operation completion.
+     */
     public func execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>, completion: @escaping (Bool) -> Void) {
         let success = _execute(update: update)
         
         completion(success)
     }
     
+    /**
+     Executes a Update against the database (using a SqliteDatabaseUpdate instance).
+     
+     - parameter update: A SqliteDatabaseUpdate instance.
+     
+     - returns: True if the operation was successful, otherwise returns false.
+     */
     public func execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> Bool {
         return _execute(update: update)
     }

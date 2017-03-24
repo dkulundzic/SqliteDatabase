@@ -45,7 +45,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
         let query = SqliteDatabaseQuery<Todo>()
         
         // Act
-        service.execute(query: query) { (rows) in
+        service.execute(query: query) { (rows, error) in
             let todos = rows.flatMap(
                 Todo.init
             )
@@ -61,18 +61,19 @@ class SqliteDatabaseServiceTests: XCTestCase {
             return rows.flatMap({ Todo(row: $0) })
         }
         
-        service.execute(query: query, transform: transform) { (todos) in
-            XCTAssert(todos.count > 0, "There should be todos returned.")
+        service.execute(query: query, transform: transform) { (todos, error) in
+            XCTAssert(todos?.count ?? 0 > 0, "There should be todos returned.")
         }
     }
     
     func test_ExecuteQueryWithWhereClause() {
         let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1")
         
-        service.execute(query: query) { (rows) in
+        service.execute(query: query) { (rows, error) in
             let todos = rows.flatMap(
                 Todo.init
             )
+            
             XCTAssert(todos.count == 1, "There shouldn be one todo returned.")
         }
     }
