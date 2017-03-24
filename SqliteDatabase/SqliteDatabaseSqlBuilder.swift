@@ -14,9 +14,19 @@ import Foundation
  */
 public class SqliteDatabaseSqlBuilder {
     
-    var isLogging = true
+    // MARK: -
+    // MARK: Public properties
+    // MARK: -
     
-    public init() { }
+    public var isLogging = true
+    
+    // MARK: -
+    // MARK: Initialisers
+    // MARK: -
+    
+    public init(isLogging: Bool = false) {
+        self.isLogging = isLogging
+    }
     
     // MARK: -
     // MARK: Query statement building

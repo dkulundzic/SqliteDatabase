@@ -60,7 +60,7 @@ public class SqliteDatabaseService {
 
 extension SqliteDatabaseService {
     private func rows<M: SqliteDatabaseMappable>(forQuery query: SqliteDatabaseQuery<M>, inDatabase database: FMDatabase, completion: ([SqliteDatabaseRow]) -> Void) throws {        
-        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forQuery: query)
         
         do {
             let resultSet = try database.executeQuery(sqlStatement, values: [])
@@ -131,7 +131,7 @@ extension SqliteDatabaseService {
 
 extension SqliteDatabaseService {
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>, completion: @escaping (Bool) -> Void) {
-        let sqlStatement = SqliteDatabaseSqlBuilder().build(forDelete: delete)
+        let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forDelete: delete)
         
         executeInTransaction { (database, rollback) in
             let success = database.executeStatements(sqlStatement)
@@ -140,7 +140,7 @@ extension SqliteDatabaseService {
     }
     
     public func execute<M: SqliteDatabaseMappable>(delete: SqliteDatabaseDelete<M>) -> Bool {
-        let sqlStatement = SqliteDatabaseSqlBuilder().build(forDelete: delete)
+        let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forDelete: delete)
         var success = false
         
         executeInTransaction { (database, rollback) in
@@ -157,7 +157,7 @@ extension SqliteDatabaseService {
 
 extension SqliteDatabaseService {
     private func _execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
-        let sqlStatement = SqliteDatabaseSqlBuilder().build(forInsert: insert)
+        let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forInsert: insert)
         var success = false
         
         executeInTransaction { (database, rollback) in
@@ -191,7 +191,7 @@ extension SqliteDatabaseService {
 
 extension SqliteDatabaseService {
     private func _execute<M: SqliteDatabaseMappable>(update: SqliteDatabaseUpdate<M>) -> Bool {
-        let sqlStatement = SqliteDatabaseSqlBuilder().build(forUpdate: update)
+        let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forUpdate: update)
         var success = false
         
         let values = update.columnValuePairs.map { $0.value }
