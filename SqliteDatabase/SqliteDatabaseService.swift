@@ -20,7 +20,7 @@ public class SqliteDatabaseService {
     // MARK: Public properties
     // MARK: -
     
-    public var isLogging = true
+    public var isLogging = false
     
     // MARK: -
     // MARK: Private properties
