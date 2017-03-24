@@ -14,6 +14,7 @@ public protocol SqliteDatabaseDefinition {
     var viewsDefinition: [String] { get }
     var triggersDefinition: [String] { get }
     var indicesDefinition: [String] { get }
+    var postCreationStatements: [String] { get }
 }
 
 extension SqliteDatabaseDefinition {
@@ -21,4 +22,5 @@ extension SqliteDatabaseDefinition {
     public var viewsDefinition: [String] { return [] }
     public var triggersDefinition: [String] { return [] }
     public var indicesDefinition: [String] { return [] }
+    public var postCreationStatements: [String] { return [] }
 }

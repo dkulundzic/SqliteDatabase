@@ -38,7 +38,10 @@ public class SqliteDatabaseInitialisation {
      - index
      - trigger
      
-     the operation will immediately fail if any of these statements fail.
+     the operation will immediately fail if any of these statements fail. 
+     
+     - note: If a database currently exists at the specified location, it will be deleted and 
+     recreated, executing the definition statements from scratch.
      
      - parameter databaseInfo: A SqliteDatabaseInfo instance defining the path of the database.
      
@@ -47,10 +50,13 @@ public class SqliteDatabaseInitialisation {
         print(databaseInfo.getDatabasePath())
         
         // If a database already exists at the path, successfully return.
-        guard !databaseExists(at: databaseInfo.getDatabasePath()) else {
-            print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()).")
+        if databaseExists(at: databaseInfo.getDatabasePath()) {
+            print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")
             
-            return true
+            guard remove(at: databaseInfo.getDatabasePath()) else {
+                print("SqliteDatabaseInitialisation: unable to remove database at \(databaseInfo.getDatabasePath()).")
+                return false
+            }
         }
         
         // Attempt to create a database at the specified file path.
@@ -74,7 +80,7 @@ public class SqliteDatabaseInitialisation {
         
         if let metadataSQLStatements = metadataSQLStatements() {
             guard database.executeStatements(metadataSQLStatements) else {
-                print("SqliteDatabaseInitialisation: failed executing metadata statements --> \(metadataSQLStatements)")
+                print("SqliteDatabaseInitialisation: failed executing metadata statements --> \(metadataSQLStatements) because \(database.lastError().localizedDescription).")
                 
                 return false
             }
@@ -82,7 +88,7 @@ public class SqliteDatabaseInitialisation {
         
         if let tableSQLStatements = tableSQLStatements() {
             guard database.executeStatements(tableSQLStatements) else  {
-                print("SqliteDatabaseInitialisation: failed executing table statements --> \(tableSQLStatements)")
+                print("SqliteDatabaseInitialisation: failed executing table statements --> \(tableSQLStatements) because \(database.lastError().localizedDescription).")
                 
                 return false
             }
@@ -90,7 +96,7 @@ public class SqliteDatabaseInitialisation {
         
         if let viewSQLStatements = viewSQLStatements() {
             guard database.executeStatements(viewSQLStatements) else  {
-                print("SqliteDatabaseInitialisation: failed executing view statements --> \(viewSQLStatements)")
+                print("SqliteDatabaseInitialisation: failed executing view statements --> \(viewSQLStatements) because \(database.lastError().localizedDescription).")
                 
                 return false
             }
@@ -98,7 +104,7 @@ public class SqliteDatabaseInitialisation {
         
         if let indexSQLStatements = indexSQLStatements() {
             guard database.executeStatements(indexSQLStatements) else  {
-                print("SqliteDatabaseInitialisation: failed executing index statements --> \(indexSQLStatements)")
+                print("SqliteDatabaseInitialisation: failed executing index statements --> \(indexSQLStatements) because \(database.lastError().localizedDescription).")
                 
                 return false
             }
@@ -106,17 +112,47 @@ public class SqliteDatabaseInitialisation {
         
         if let triggerSQLStatements = triggerSQLStatements() {
             guard database.executeStatements(triggerSQLStatements) else  {
-                print("SqliteDatabaseInitialisation: failed executing trigger statements --> \(triggerSQLStatements)")
+                print("SqliteDatabaseInitialisation: failed executing trigger statements --> \(triggerSQLStatements) because \(database.lastError().localizedDescription).")
                 
                 return false
+            }
+        }
+        
+        if let postCreationSQLStatements = postCreationSQLStatements() {
+            if !database.executeStatements(postCreationSQLStatements) {
+                print("SqliteDatabaseInitialisation: failed executing trigger statements --> \(postCreationSQLStatements) because \(database.lastError().localizedDescription).")
             }
         }
         
         return true
     }
     
+    /**
+     Checks whether a database exists at the specified path. The path should be fully specified.
+     
+     - parameter path: The database file path.
+     - returns: True if the file exists, false if it does not.
+     */
     public func databaseExists(at path: String) -> Bool {
         return FileManager.default.fileExists(atPath: path)
+    }
+    
+    /**
+     Attempts to remove the database at the specified path.
+     
+     - note: This method will print out a error if the file deletion throws.
+     
+     - parameter path: The database file path.
+     - returns: True if the file was successfully removed, false if it was not.
+     */
+    public func remove(at path: String) -> Bool {        
+        do {
+            try FileManager.default.removeItem(atPath: path)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
     }
     
     // MARK: -
@@ -161,6 +197,14 @@ public class SqliteDatabaseInitialisation {
         }
         
         return databaseDefinition.triggersDefinition.joined(separator: "")
+    }
+    
+    private func postCreationSQLStatements() -> String? {
+        guard databaseDefinition.postCreationStatements.count > 0 else {
+            return nil
+        }
+        
+        return databaseDefinition.postCreationStatements.joined(separator: "")
     }
     
 }

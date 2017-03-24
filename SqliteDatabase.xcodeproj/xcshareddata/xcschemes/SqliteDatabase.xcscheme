@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2F48F1EC1E44B44F00702A4F"
+               BuildableName = "SqliteDatabaseTests.xctest"
+               BlueprintName = "SqliteDatabaseTests"
+               ReferencedContainer = "container:SqliteDatabase.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "2F48F1E31E44B44F00702A4F"
+            BuildableName = "SqliteDatabase.framework"
+            BlueprintName = "SqliteDatabase"
+            ReferencedContainer = "container:SqliteDatabase.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

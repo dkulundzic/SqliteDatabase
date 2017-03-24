@@ -31,4 +31,12 @@ struct DatabaseDefinition: SqliteDatabaseDefinition {
     var triggersDefinition: [String] {
         return []
     }
+    
+    var postCreationStatements: [String] {
+        return [
+            "INSERT INTO Todo (Description, Completed) VALUES ('Feed the cat', 0);",
+            "INSERT INTO Todo (Description, Completed) VALUES ('Bar the gates', 0);",
+            "INSERT INTO Todo (Description, Completed) VALUES ('Feed the elephant', 1);"
+        ]
+    }
 }

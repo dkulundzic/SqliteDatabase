@@ -17,4 +17,5 @@ public class SqliteDatabaseBuildableDefinition: SqliteDatabaseDefinition {
     public var viewsDefinition: [String] = []
     public var triggersDefinition: [String] = []
     public var indicesDefinition: [String] = []
+    public var postCreationStatements: [String] = []
 }

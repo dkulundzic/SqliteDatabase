@@ -12,19 +12,38 @@ import SqliteDatabase
 class SqliteDatabaseServiceTests: XCTestCase {
     
     let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    var service: SqliteDatabaseService!
     
     override func setUp() {
         super.setUp()
+        
+        let databaseDefinition = SqliteDatabaseDefinitionBuilder()
+            .with(tablesDefinition: [
+                "CREATE TABLE TODO (Id INTEGER PRIMARY KEY, Description TEXT, Completed INTEGER);"
+                ])
+            .with(postCreationStatements: [
+                "INSERT INTO Todo (Description, Completed) VALUES ('Feed the cat', 0);",
+                "INSERT INTO Todo (Description, Completed) VALUES ('Bar the gates', 0);",
+                "INSERT INTO Todo (Description, Completed) VALUES ('Feed the elephant', 1);"
+                ])
+            .build()
+        
+        let _ = SqliteDatabaseInitialisation(databaseDefinition: databaseDefinition)
+            .initialise(withDatabaseInfo: databaseInfo)
+        service = SqliteDatabaseService(databaseInfo: databaseInfo)
+        service.isLogging = false
     }
     
     override func tearDown() {
         super.tearDown()
+        
+        let _ = SqliteDatabaseInitialisation(databaseDefinition: DatabaseDefinition())
+            .remove(at: databaseInfo.getDatabasePath())
     }
     
     func test_ExecuteQueryWithoutTransform() {
         // Arrange
         let query = SqliteDatabaseQuery<Todo>()
-        let service = SqliteDatabaseService(databaseInfo: databaseInfo)
         
         // Act
         service.execute(query: query) { (rows) in
@@ -43,25 +62,20 @@ class SqliteDatabaseServiceTests: XCTestCase {
             return rows.flatMap({ Todo(row: $0) })
         }
         
-        let service = SqliteDatabaseService(databaseInfo: databaseInfo)
-        
         service.execute(query: query, transform: transform) { (todos) in
-            XCTAssert(todos.count > 0, "There shouldn be todos returned.")
+            XCTAssert(todos.count > 0, "There should be todos returned.")
         }
     }
     
     func test_ExecuteQueryWithWhereClause() {
         let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1")
         
-        let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
-        let service = SqliteDatabaseService(databaseInfo: databaseInfo)
-        
         service.execute(query: query) { (rows) in
             let todos = rows.flatMap(
                 Todo.init
             )
-            XCTAssert(todos.count == 0, "There shouldn't be any todos returned.")
+            XCTAssert(todos.count == 1, "There shouldn be one todo returned.")
         }
     }
-
+    
 }

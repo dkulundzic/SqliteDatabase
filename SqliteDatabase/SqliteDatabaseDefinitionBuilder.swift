@@ -53,6 +53,11 @@ public class SqliteDatabaseDefinitionBuilder {
         return self
     }
     
+    public func with(postCreationStatements: [String]) -> SqliteDatabaseDefinitionBuilder {
+        databaseDefinition.postCreationStatements = postCreationStatements
+        return self
+    }
+    
     /**
      Returns the internal SqliteDatabaseBuildableDefinition instance built by the SqliteDatabaseDefinitionBuilder.
      */
