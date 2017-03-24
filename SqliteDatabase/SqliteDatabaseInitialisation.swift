@@ -9,6 +9,16 @@
 import Foundation
 import FMDB
 
+/**
+ The class takes care of initialising  the SQLite database at a location specified by a
+ SqliteDatabaseInfo instance. 
+ 
+ The initialisation process executes in the following steps:
+ - Check whether a database exists at the specified file path, delete if true.
+ - Attempt to create and open a database at the specified file path.
+ - Execute SqliteDatabaseDefinition statements following the order specified within the "initialise" method.
+ - Close the database connection.
+ */
 public class SqliteDatabaseInitialisation {
     
     // MARK: -
@@ -37,6 +47,7 @@ public class SqliteDatabaseInitialisation {
      - view
      - index
      - trigger
+     - post creation statements
      
      the operation will immediately fail if any of these statements fail. 
      
@@ -47,8 +58,6 @@ public class SqliteDatabaseInitialisation {
      
      */
     public func initialise(withDatabaseInfo databaseInfo: SqliteDatabaseInfo) -> Bool {
-        print(databaseInfo.getDatabasePath())
-        
         // If a database already exists at the path, successfully return.
         if databaseExists(at: databaseInfo.getDatabasePath()) {
             print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")

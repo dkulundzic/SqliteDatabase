@@ -8,6 +8,14 @@
 
 import Foundation
 
+/**
+ Represents a single SQL Insert operation. 
+ 
+ The Insert is initialised with a SqliteDatabaseMappable conforming instance and a flag
+ that determines whether the operation should be INSERT or INSERT OR REPLACE.
+ 
+ Both columns and values used for the Insert are taken from the generic type and SqliteDatabaseMappable instance.
+ */
 public class SqliteDatabaseInsert<M: SqliteDatabaseMappable> {
     public let tableName: String
     public let columns: [String]

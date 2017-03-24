@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ A convenience class used to build SqliteDatabaseBuildableDefinition instances.
+ */
 public class SqliteDatabaseDefinitionBuilder {
     
     // MARK: -
@@ -28,31 +31,49 @@ public class SqliteDatabaseDefinitionBuilder {
     // MARK: API
     // MARK: -
     
+    /**
+     Attaches metadata definition data to the SqliteDatabaseBuildableDefinition.
+     */
     public func with(metadataDefinition: [String]) -> SqliteDatabaseDefinitionBuilder {
         databaseDefinition.metadataDefinition = metadataDefinition
         return self
     }
     
+    /**
+     Attaches table definition data to the SqliteDatabaseBuildableDefinition.
+     */
     public func with(tablesDefinition: [String]) -> SqliteDatabaseDefinitionBuilder {
         databaseDefinition.tablesDefinition = tablesDefinition
         return self
     }
     
+    /**
+     Attaches view definition data to the SqliteDatabaseBuildableDefinition.
+     */
     public func with(viewsDefinition: [String]) -> SqliteDatabaseDefinitionBuilder {
         databaseDefinition.viewsDefinition = viewsDefinition
         return self
     }
     
+    /**
+     Attaches index definition data to the SqliteDatabaseBuildableDefinition.
+     */
     public func with(indicesDefinition: [String]) -> SqliteDatabaseDefinitionBuilder {
         databaseDefinition.indicesDefinition = indicesDefinition
         return self
     }
     
+    /**
+     Attaches trigger definition data to the SqliteDatabaseBuildableDefinition.
+     */
     public func with(triggersDefinition: [String]) -> SqliteDatabaseDefinitionBuilder {
         databaseDefinition.triggersDefinition = triggersDefinition
         return self
     }
     
+    /**
+     Attaches post creation statement data to the SqliteDatabaseBuildableDefinition.
+     */
     public func with(postCreationStatements: [String]) -> SqliteDatabaseDefinitionBuilder {
         databaseDefinition.postCreationStatements = postCreationStatements
         return self

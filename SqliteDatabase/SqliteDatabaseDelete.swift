@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Represents a single SQL Delete operation.
+ */
 public class SqliteDatabaseDelete<M: SqliteDatabaseMappable> {
     public let tableName: String
     public let whereClause: String

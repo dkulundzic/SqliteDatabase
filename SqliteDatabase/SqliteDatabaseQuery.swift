@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ A struct containing data about a single SQL join.
+ */
 public struct SqliteDatabaseQueryJoin {
     public enum SqliteDatabaseQueryJoinType: String {
         case inner = "inner"
@@ -25,6 +28,15 @@ public struct SqliteDatabaseQueryJoin {
     }
 }
 
+/**
+ Represents a single SQL Query operation. Contains all information needed to create SQL
+ queries.
+ 
+ Supports the following Query elements:
+ - Where clause
+ - Limit clause
+ - Joins (types of joins are determined by the SqliteDatabaseQueryJoinType enum)
+ */
 public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
     
     public let tableName: String

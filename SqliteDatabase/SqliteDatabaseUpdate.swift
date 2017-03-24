@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Represents a single Column-Value pairing. Ensures and enforces correct binding.
+ */
 public struct SqliteDatabaseUpdateColumnValuePair {
     public let column: String
     public let value: Any?
@@ -18,8 +21,10 @@ public struct SqliteDatabaseUpdateColumnValuePair {
     }
 }
 
-public class SqliteDatabaseUpdate<M: SqliteDatabaseMappable> {
-    
+/**
+ Represents a single Update SQL operation.
+ */
+public class SqliteDatabaseUpdate<M: SqliteDatabaseMappable> {    
     public let tableName: String
     public let columnValuePairs: [SqliteDatabaseUpdateColumnValuePair]
     public let whereClause: String

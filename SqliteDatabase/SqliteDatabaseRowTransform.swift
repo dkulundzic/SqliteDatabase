@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+ A transformation class whose aim's to transform an array of SqliteDatabaseRow
+ to the specified type.
+ */
 open class SqliteDatabaseRowTransform<T> {
     private let transformation: ([SqliteDatabaseRow]) -> T
     
