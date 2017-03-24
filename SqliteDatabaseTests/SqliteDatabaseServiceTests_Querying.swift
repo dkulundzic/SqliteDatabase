@@ -31,7 +31,6 @@ class SqliteDatabaseServiceTests: XCTestCase {
         let _ = SqliteDatabaseInitialisation(databaseDefinition: databaseDefinition)
             .initialise(withDatabaseInfo: databaseInfo)
         service = SqliteDatabaseService(databaseInfo: databaseInfo)
-        service.isLogging = false
     }
     
     override func tearDown() {

@@ -12,34 +12,46 @@ import SqliteDatabase
 class SqliteDatabaseServiceTests_Update: XCTestCase {
     
     let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    var service: SqliteDatabaseService!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        let databaseDefinition = SqliteDatabaseDefinitionBuilder()
+            .with(tablesDefinition: [
+                "CREATE TABLE TODO (Id INTEGER PRIMARY KEY, Description TEXT, Completed INTEGER);"
+                ])
+            .with(postCreationStatements: [
+                "INSERT INTO Todo (Description, Completed) VALUES ('Feed the cat', 0);",
+                "INSERT INTO Todo (Description, Completed) VALUES ('Bar the gates', 0);",
+                "INSERT INTO Todo (Description, Completed) VALUES ('Feed the elephant', 1);"
+                ])
+            .build()
+        
+        let _ = SqliteDatabaseInitialisation(databaseDefinition: databaseDefinition)
+            .initialise(withDatabaseInfo: databaseInfo)
+        service = SqliteDatabaseService(databaseInfo: databaseInfo)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        
+        let _ = SqliteDatabaseInitialisation(databaseDefinition: DatabaseDefinition())
+            .remove(at: databaseInfo.getDatabasePath())
     }
     
     func test_ExecuteUpdateSync() {
-        let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
-        
         let updateColumnValuePairs = [
             SqliteDatabaseUpdateColumnValuePair(column: "Description", value: "Feed the cat")
         ]
         
         let update = SqliteDatabaseUpdate<Todo>(columnValuePairs: updateColumnValuePairs, whereClause: "Completed = 0")
-        
-        let success = databaseService.execute(update: update)
+        let success = service.execute(update: update)
         
         XCTAssert(success, "The update should succeed.")
     }
     
     func test_ExecuteUpdateAsync() {
-        let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
-        
         var _success = false
         
         let updateColumnValuePairs = [
@@ -47,8 +59,7 @@ class SqliteDatabaseServiceTests_Update: XCTestCase {
         ]
         
         let update = SqliteDatabaseUpdate<Todo>(columnValuePairs: updateColumnValuePairs, whereClause: "Completed = 0")
-        
-        databaseService.execute(update: update) { (success) in
+        service.execute(update: update) { (success) in
             _success = success
         }
         

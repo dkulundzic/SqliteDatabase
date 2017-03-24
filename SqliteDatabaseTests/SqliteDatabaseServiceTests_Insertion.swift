@@ -12,34 +12,44 @@ import SqliteDatabase
 class SqliteDatabaseServiceTests_Insertion: XCTestCase {
     
     let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    var service: SqliteDatabaseService!
     
     override func setUp() {
         super.setUp()
+        
+        let databaseDefinition = SqliteDatabaseDefinitionBuilder()
+            .with(tablesDefinition: [
+                "CREATE TABLE TODO (Id INTEGER PRIMARY KEY, Description TEXT, Completed INTEGER);"
+                ])
+            .build()
+        
+        let _ = SqliteDatabaseInitialisation(databaseDefinition: databaseDefinition)
+            .initialise(withDatabaseInfo: databaseInfo)
+        service = SqliteDatabaseService(databaseInfo: databaseInfo)
     }
     
     override func tearDown() {
         super.tearDown()
+        
+        let _ = SqliteDatabaseInitialisation(databaseDefinition: DatabaseDefinition())
+            .remove(at: databaseInfo.getDatabasePath())
     }
     
     func test_ExecuteInsertionSync() {
-        let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
-        
         let todo = Todo(description: "Feed the cat")
         
         let insertion = SqliteDatabaseInsert<Todo>(mappable: todo)
-        let success = databaseService.execute(insert: insertion)
+        let success = service.execute(insert: insertion)
         
         XCTAssert(success, "The insertion should succeed.")
     }
     
     func test_ExecuteInsertionAsync() {
-        let databaseService = SqliteDatabaseService(databaseInfo: databaseInfo)
-        
         var _success = false
         let todo = Todo(description: "Feed the cat")
         let insertion = SqliteDatabaseInsert<Todo>(mappable: todo)
         
-        databaseService.execute(insert: insertion) { (success) in
+        service.execute(insert: insertion) { (success) in
             _success = success
         }
         
