@@ -14,13 +14,13 @@ import Foundation
 public class SqliteDatabaseInfo {
     
     /// The default identifier to be used if a user identifier was not specified.
-    public static let defaultIdentifier = "com.sqlite-database-info.default"
+    public static let defaultIdentifier = "default"
     
     /// User determined identifier, will be used as part of the database's name on the file system.
-    public let userIdentifier: String
+    public let databaseIdentifier: String
     
-    public init(userIdentifier: String) {
-        self.userIdentifier = userIdentifier.isEmpty ? SqliteDatabaseInfo.defaultIdentifier: userIdentifier
+    public init(databaseIdentifier: String) {
+        self.databaseIdentifier = databaseIdentifier.isEmpty ? SqliteDatabaseInfo.defaultIdentifier: databaseIdentifier
     }
     
     /**
@@ -33,7 +33,7 @@ public class SqliteDatabaseInfo {
      */
     public func getDatabasePath() -> String {
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let databaseURL = documentsDirectoryURL.appendingPathComponent("\(userIdentifier).db")
+        let databaseURL = documentsDirectoryURL.appendingPathComponent("\(databaseIdentifier).db")
         
         return databaseURL.path
     }
