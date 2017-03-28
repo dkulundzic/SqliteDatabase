@@ -59,7 +59,7 @@ public class SqliteDatabaseInitialisation {
      */
     public func initialise(withDatabaseInfo databaseInfo: SqliteDatabaseInfo) -> Bool {
         // If a database already exists at the path, successfully return.
-        if databaseExists(at: databaseInfo.getDatabasePath()) {
+        if databaseExists(atPath: databaseInfo.getDatabasePath()) {
             print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")
             
             guard remove(at: databaseInfo.getDatabasePath()) else {
@@ -142,7 +142,7 @@ public class SqliteDatabaseInitialisation {
      - parameter path: The database file path.
      - returns: True if the file exists, false if it does not.
      */
-    public func databaseExists(at path: String) -> Bool {
+    public func databaseExists(atPath path: String) -> Bool {
         return FileManager.default.fileExists(atPath: path)
     }
     
