@@ -59,10 +59,10 @@ public class SqliteDatabaseInitialisation {
      */
     public func initialise(withDatabaseInfo databaseInfo: SqliteDatabaseInfo) -> Bool {
         // If a database already exists at the path, successfully return.
-        if databaseExists(atPath: databaseInfo.getDatabasePath()) {
+        if SqliteDatabaseUtility.databaseExists(atPath: databaseInfo.getDatabasePath()) {
             print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")
             
-            guard remove(at: databaseInfo.getDatabasePath()) else {
+            guard SqliteDatabaseUtility.remove(atPath: databaseInfo.getDatabasePath()) else {
                 print("SqliteDatabaseInitialisation: unable to remove database at \(databaseInfo.getDatabasePath()).")
                 return false
             }
@@ -134,34 +134,6 @@ public class SqliteDatabaseInitialisation {
         }
         
         return true
-    }
-    
-    /**
-     Checks whether a database exists at the specified path. The path should be fully specified.
-     
-     - parameter path: The database file path.
-     - returns: True if the file exists, false if it does not.
-     */
-    public func databaseExists(atPath path: String) -> Bool {
-        return FileManager.default.fileExists(atPath: path)
-    }
-    
-    /**
-     Attempts to remove the database at the specified path.
-     
-     - note: This method will print out a error if the file deletion throws.
-     
-     - parameter path: The database file path.
-     - returns: True if the file was successfully removed, false if it was not.
-     */
-    public func remove(at path: String) -> Bool {        
-        do {
-            try FileManager.default.removeItem(atPath: path)
-            return true
-        } catch {
-            print(error.localizedDescription)
-            return false
-        }
     }
     
     // MARK: -
