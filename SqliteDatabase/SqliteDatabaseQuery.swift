@@ -35,6 +35,7 @@ public struct SqliteDatabaseQueryJoin {
  Supports the following Query elements:
  - Where clause
  - Limit clause
+ - Offset clause - only possible when combined with the Limit clause
  - Joins (types of joins are determined by the SqliteDatabaseQueryJoinType enum)
  */
 public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
@@ -43,13 +44,15 @@ public class SqliteDatabaseQuery<M: SqliteDatabaseMappable> {
     public let columns: [String]
     public let whereClause: String?
     public let limit: Int?
+    public let offset: Int?
     public let joins: [SqliteDatabaseQueryJoin]?
     
-    public init(whereClause: String? = nil, limit: Int? = nil, joins: [SqliteDatabaseQueryJoin]? = nil) {
+    public init(whereClause: String? = nil, limit: Int? = nil, offset: Int? = nil, joins: [SqliteDatabaseQueryJoin]? = nil) {
         self.tableName = M.tableName
         self.columns = M.columns
         self.whereClause = whereClause
         self.limit = limit
+        self.offset = offset
         self.joins = joins
     }
 }

@@ -37,6 +37,23 @@ class SqliteDatabaseSqlBuilderTests: XCTestCase {
         XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo LIMIT \(limit);".lowercased(), "The created QUERY sql statement is invalid.")
     }
     
+    func test_QuerySqlStatementCreationWithOffsetClause() {
+        let limit = 3
+        let offset = 5
+        let query = SqliteDatabaseQuery<Todo>(limit: limit, offset: offset)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo LIMIT \(limit) OFFSET \(offset);".lowercased(), "The created QUERY sql statement is invalid.")
+    }
+    
+    func test_QuerySqlStatementCreationWithOffsetClauseWithoutLimit() {
+        let offset = 5
+        let query = SqliteDatabaseQuery<Todo>(offset: offset)
+        let sqlStatement = SqliteDatabaseSqlBuilder().build(forQuery: query)
+        
+        XCTAssert(sqlStatement.lowercased() == "SELECT Description,Completed FROM Todo;".lowercased(), "The created QUERY sql statement is invalid.")
+    }
+    
     func test_QuerySqlStatementCreationWithWhereAndLimitClause() {
         let limit = 3
         let query = SqliteDatabaseQuery<Todo>(whereClause: "Completed = 1", limit: limit)

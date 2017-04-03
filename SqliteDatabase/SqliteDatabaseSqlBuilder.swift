@@ -51,6 +51,10 @@ public class SqliteDatabaseSqlBuilder {
         
         if let limit = query.limit {
             sqlStatement += " LIMIT \(limit)"
+            
+            if let offset = query.offset {
+                sqlStatement += " OFFSET \(offset)"
+            }
         }
         
         sqlStatement += ";"
