@@ -22,7 +22,7 @@ class SqliteDatabaseInfoTests: XCTestCase {
     }
     
     func test_InstanceCreation_NonEmptyUserIdentifier() {
-        let info = SqliteDatabaseInfo(userIdentifier: "com.SqliteDatabase.Info")
+        let info = SqliteDatabaseInfo(databaseIdentifier: "com.SqliteDatabase.Info")
         let path = info.getDatabasePath()
         
         let expectedPath = "\(documentsDirectoryURL.path)/com.SqliteDatabase.Info.db"
@@ -30,7 +30,7 @@ class SqliteDatabaseInfoTests: XCTestCase {
     }
     
     func test_InstanceCreation_EmptyUserIdentifier() {
-        let info = SqliteDatabaseInfo(userIdentifier: "")
+        let info = SqliteDatabaseInfo(databaseIdentifier: "")
         let path = info.getDatabasePath()
         
         let expectedPath = "\(documentsDirectoryURL.path)/\(SqliteDatabaseInfo.defaultIdentifier).db"

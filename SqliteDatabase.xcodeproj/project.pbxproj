@@ -133,7 +133,6 @@
 			children = (
 				2F48F2221E44C16100702A4F /* Todo.swift */,
 				481E71D11E83D98F00B37FB3 /* DatabaseDefinition.swift */,
-				2F48F2161E44BBDD00702A4F /* Integration tests */,
 				2F48F2151E44BBD900702A4F /* Unit tests */,
 				2F48F1F41E44B44F00702A4F /* Info.plist */,
 			);
@@ -171,13 +170,6 @@
 				4894CD8E1E7BEF8900F6DD97 /* SqliteDatabaseServiceTests */,
 			);
 			name = "Unit tests";
-			sourceTree = "<group>";
-		};
-		2F48F2161E44BBDD00702A4F /* Integration tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Integration tests";
 			sourceTree = "<group>";
 		};
 		2F48F21B1E44C06700702A4F /* Utility */ = {

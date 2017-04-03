@@ -11,7 +11,7 @@ import SqliteDatabase
 
 class SqliteDatabaseServiceTests: XCTestCase {
     
-    let databaseInfo = SqliteDatabaseInfo(userIdentifier: "")
+    let databaseInfo = SqliteDatabaseInfo(databaseIdentifier: "")
     var service: SqliteDatabaseService!
     
     override func setUp() {
@@ -36,8 +36,7 @@ class SqliteDatabaseServiceTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        let _ = SqliteDatabaseInitialisation(databaseDefinition: DatabaseDefinition())
-            .remove(at: databaseInfo.getDatabasePath())
+        let _ = SqliteDatabaseUtility.remove(atPath: databaseInfo.getDatabasePath())
     }
     
     func test_ExecuteQueryWithoutTransform() {

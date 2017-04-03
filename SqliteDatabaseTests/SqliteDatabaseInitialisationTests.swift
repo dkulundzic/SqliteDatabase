@@ -17,7 +17,7 @@ class SqliteDatabaseInitialisationTests: XCTestCase {
         )
         
         let success = databaseInitialisation.initialise(
-            withDatabaseInfo: SqliteDatabaseInfo(userIdentifier: "")
+            withDatabaseInfo: SqliteDatabaseInfo(databaseIdentifier: "")
         )
         
         XCTAssert(success, "The database initialisation should succeed.")
@@ -37,7 +37,7 @@ class SqliteDatabaseInitialisationTests: XCTestCase {
         )
         
         let success = databaseInitialisation.initialise(
-            withDatabaseInfo: SqliteDatabaseInfo(userIdentifier: "")
+            withDatabaseInfo: SqliteDatabaseInfo(databaseIdentifier: "")
         )
         
         XCTAssert(success, "The database initialisation should succeed.")
@@ -54,7 +54,7 @@ class SqliteDatabaseInitialisationTests: XCTestCase {
         )
         
         let success = databaseInitialisation.initialise(
-            withDatabaseInfo: SqliteDatabaseInfo(userIdentifier: "")
+            withDatabaseInfo: SqliteDatabaseInfo(databaseIdentifier: "")
         )
         
         XCTAssert(success, "The database initialisation should succeed.")
