@@ -38,21 +38,21 @@ class SqliteDatabaseServiceTests_Insertion: XCTestCase {
         let todo = Todo(description: "Feed the cat")
         
         let insertion = SqliteDatabaseInsert<Todo>(mappable: todo)
-        let success = service.execute(insert: insertion)
+        let rowId = service.execute(insert: insertion)
         
-        XCTAssert(success, "The insertion should succeed.")
+        XCTAssertNotNil(rowId, "The insertion should succeed.")
     }
     
     func test_ExecuteInsertionAsync() {
-        var _success = false
+        var rowId: Int64?
         let todo = Todo(description: "Feed the cat")
         let insertion = SqliteDatabaseInsert<Todo>(mappable: todo)
         
-        service.execute(insert: insertion) { (success) in
-            _success = success
+        service.execute(insert: insertion) { (insertedRowId) in
+            rowId = insertedRowId
         }
         
-        XCTAssert(_success, "The insertion should succeed.")
+        XCTAssertNotNil(rowId, "The insertion should succeed.")
     }
     
 }

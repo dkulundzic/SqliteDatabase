@@ -186,14 +186,14 @@ extension SqliteDatabaseService {
 // MARK: -
 
 extension SqliteDatabaseService {
-    private func _execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
+    private func _execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Int64? {
         let sqlStatement = SqliteDatabaseSqlBuilder(isLogging: isLogging).build(forInsert: insert)
-        var success = false
+        var rowId: Int64?
         
         executeInTransaction { (database, rollback) in
             do {
                 try database.executeUpdate(sqlStatement, values: insert.values)
-                success = true
+                rowId = database.lastInsertRowId()
             } catch {
                 if self.isLogging {
                     print(error.localizedDescription)
@@ -201,7 +201,7 @@ extension SqliteDatabaseService {
             }
         }
         
-        return success
+        return rowId
     }
     
     /**
@@ -210,10 +210,10 @@ extension SqliteDatabaseService {
      - parameter insert: A SqliteDatabaseInsert instance.
      - parameter completion: A closure to invoke upon operation completion.
      */
-    public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>, completion: @escaping (Bool) -> Void) {
-        let success = _execute(insert: insert)
+    public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>, completion: @escaping (Int64?) -> Void) {
+        let rowId = _execute(insert: insert)
         
-        completion(success)
+        completion(rowId)
     }
     
     /**
@@ -223,7 +223,7 @@ extension SqliteDatabaseService {
      
      - returns: True if the operation was successful, otherwise returns false.
      */
-    public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Bool {
+    public func execute<M: SqliteDatabaseMappable>(insert: SqliteDatabaseInsert<M>) -> Int64? {
         return _execute(insert: insert)
     }
 }
