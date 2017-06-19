@@ -69,11 +69,7 @@ public class SqliteDatabaseInitialisation {
         }
         
         // Attempt to create a database at the specified file path.
-        guard let database = FMDatabase(path: databaseInfo.getDatabasePath()) else {
-            print("SqliteDatabaseInitialisation: failed creating database at \(databaseInfo.getDatabasePath()).")
-            
-            return false
-        }
+        let database = FMDatabase(path: databaseInfo.getDatabasePath())!
         
         // Attempt to open the database.
         guard database.open() else {
