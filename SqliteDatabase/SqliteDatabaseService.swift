@@ -43,11 +43,6 @@ public class SqliteDatabaseService {
     
     fileprivate func executeInTransaction(operation: @escaping (FMDatabase, UnsafeMutablePointer<ObjCBool>) -> Void) {
         databaseQueue.inTransaction { (database, rollback) in
-            guard let database = database, let rollback = rollback else {
-                print("Transaction failed, couldn't retrieve FMDatabase or the rollback parameter.")
-                
-                return
-            }
             operation(database, rollback)
         }
     }
@@ -71,7 +66,7 @@ extension SqliteDatabaseService {
             var rows = [SqliteDatabaseRow]()
             
             while resultSet.next() {
-                guard let row = resultSet.resultDictionary() as? SqliteDatabaseRow else {
+                guard let row = resultSet.resultDictionary as? SqliteDatabaseRow else {
                     continue
                 }
                 
@@ -193,7 +188,7 @@ extension SqliteDatabaseService {
         executeInTransaction { (database, rollback) in
             do {
                 try database.executeUpdate(sqlStatement, values: insert.values)
-                rowId = database.lastInsertRowId()
+                rowId = database.lastInsertRowId
             } catch {
                 if self.isLogging {
                     print(error.localizedDescription)
