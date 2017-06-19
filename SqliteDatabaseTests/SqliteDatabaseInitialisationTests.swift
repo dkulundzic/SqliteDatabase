@@ -11,6 +11,12 @@ import SqliteDatabase
 
 class SqliteDatabaseInitialisationTests: XCTestCase {
     
+    override func tearDown() {
+        super.tearDown()
+        
+        _ = SqliteDatabaseUtility.remove(atPath: SqliteDatabaseInfo(databaseIdentifier: "").getDatabasePath())
+    }
+    
     func test_DatabaseInitialisation() {
         let databaseInitialisation = SqliteDatabaseInitialisation(
             databaseDefinition: DatabaseDefinition()

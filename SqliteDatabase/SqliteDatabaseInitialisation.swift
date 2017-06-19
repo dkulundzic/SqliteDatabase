@@ -57,9 +57,9 @@ public class SqliteDatabaseInitialisation {
      - parameter databaseInfo: A SqliteDatabaseInfo instance defining the path of the database.
      
      */
-    public func initialise(withDatabaseInfo databaseInfo: SqliteDatabaseInfo) -> Bool {
+    public func initialise(withDatabaseInfo databaseInfo: SqliteDatabaseInfo, deleteIfExists: Bool = false) -> Bool {
         // If a database already exists at the path, successfully return.
-        if SqliteDatabaseUtility.databaseExists(atPath: databaseInfo.getDatabasePath()) {
+        if SqliteDatabaseUtility.databaseExists(atPath: databaseInfo.getDatabasePath()), deleteIfExists {
             print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")
             
             guard SqliteDatabaseUtility.remove(atPath: databaseInfo.getDatabasePath()) else {
