@@ -59,12 +59,16 @@ public class SqliteDatabaseInitialisation {
      */
     public func initialise(withDatabaseInfo databaseInfo: SqliteDatabaseInfo, deleteIfExists: Bool = false) -> Bool {
         // If a database already exists at the path, successfully return.
-        if SqliteDatabaseUtility.databaseExists(atPath: databaseInfo.getDatabasePath()), deleteIfExists {
-            print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")
-            
-            guard SqliteDatabaseUtility.remove(atPath: databaseInfo.getDatabasePath()) else {
-                print("SqliteDatabaseInitialisation: unable to remove database at \(databaseInfo.getDatabasePath()).")
-                return false
+        if SqliteDatabaseUtility.databaseExists(atPath: databaseInfo.getDatabasePath()) {
+            if deleteIfExists {
+                print("SqliteDatabaseInitialisation: database already exists at \(databaseInfo.getDatabasePath()), deleting.")
+                
+                guard SqliteDatabaseUtility.remove(atPath: databaseInfo.getDatabasePath()) else {
+                    print("SqliteDatabaseInitialisation: unable to remove database at \(databaseInfo.getDatabasePath()).")
+                    return false
+                }
+            } else {
+                return true
             }
         }
         
