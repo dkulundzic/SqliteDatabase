@@ -104,6 +104,30 @@ extension SqliteDatabaseService {
         
         executeInTransaction(operation: operation)
     }
+    
+    /**
+     Executes a Query against the database (using a SqliteDatabaseQuery instance).
+     
+     - parameter query: A SqliteDatabaseQuery instance.
+     - parameter completion: A closure to be invoked upon operation completion.
+     */
+    public func execute<M: SqliteDatabaseMappable>(query: SqliteDatabaseQuery<M>, completion: @escaping ([M], SqliteDatabaseServiceError?) -> Void) {
+        
+        let operation = { (database: FMDatabase, rollback: UnsafeMutablePointer<ObjCBool>) in
+            do {
+                try self.rows(forQuery: query, inDatabase: database, completion: { (rows, error) in
+                    let entities = rows.flatMap(M.init)
+                    completion(entities, error)
+                })
+            } catch {
+                print(error.localizedDescription)
+                completion([], .error(error.localizedDescription))
+            }
+        }
+        
+        executeInTransaction(operation: operation)
+    }
+    
     /**
      Executes a Query against the database (using a SqliteDatabaseQuery instance) with a SqliteDatabaseRowTransform instance
      to transform the rows retrieved.
